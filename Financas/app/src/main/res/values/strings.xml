@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Financas</string>
+    <string name="action_sair">Sair</string>
+
+    <string name="title_activity_pagina_inicial">Página Inicial</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_despesas">Despesas</string>
+    <string name="title_activity_rendimentos">Rendimentos</string>
+    <string name="title_activity_inclusao_despesas">Adicionar Despesa</string>
+</resources>
