@@ -94,6 +94,7 @@ public class RendimentosActivity extends AppCompatActivity
         RendimentosActivity.this.overridePendingTransition(0, 0);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        this.finish();
         return true;
     }
 }

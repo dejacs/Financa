@@ -75,9 +75,11 @@ public class PaginaInicial extends AppCompatActivity
 
         if (id == R.id.nav_despesas) {
             intent = new Intent(PaginaInicial.this, DespesasActivity.class);
+            this.finish();
             startActivity(intent);
         } else if (id == R.id.nav_rendimentos) {
             intent = new Intent(PaginaInicial.this, RendimentosActivity.class);
+            this.finish();
             startActivity(intent);
         }
         PaginaInicial.this.overridePendingTransition(0, 0);
