@@ -33,7 +33,10 @@
             android:name=".activity.RendimentosActivity"
             android:label="@string/title_activity_rendimentos"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.InclusaoDespesa"
+        <activity
+            android:name=".activity.InclusaoDespesa"
+            android:label="@string/adicionar" />
+        <activity android:name=".activity.InclusaoRendimento"
             android:label="@string/adicionar" />
     </application>
 

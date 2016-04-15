@@ -9,12 +9,12 @@ import android.view.MenuItem;
 
 import com.example.jadecsilveira.financas.R;
 
-public class InclusaoDespesa extends AppCompatActivity {
+public class InclusaoRendimento extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inclusao_despesa);
+        setContentView(R.layout.activity_inclusao_rendimento);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -28,7 +28,7 @@ public class InclusaoDespesa extends AppCompatActivity {
         Intent intent = null;
         switch (item.getItemId()) {
             case R.id.action_enviar:
-                intent = new Intent(InclusaoDespesa.this, DespesasActivity.class);
+                intent = new Intent(InclusaoRendimento.this, RendimentosActivity.class);
                 this.finish();
                 startActivity(intent);
                 return true;
