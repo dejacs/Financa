@@ -38,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "dataInclusao" +
                         ");"
         );
+
     }
 
     @Override
