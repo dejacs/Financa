@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class InclusaoRendimento extends AppCompatActivity {
 
-    private DatabaseHelper helper;
+    private DatabaseHelper helper = new DatabaseHelper(this);
     private EditText descricao, valor;
 
     @Override
