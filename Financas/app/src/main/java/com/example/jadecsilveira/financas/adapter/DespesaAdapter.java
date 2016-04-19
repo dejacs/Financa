@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.jadecsilveira.financas.R;
+import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.DespesaVO;
 
 import java.util.ArrayList;
@@ -51,8 +52,8 @@ public class DespesaAdapter extends BaseAdapter {
 
         DespesaVO despesa = new DespesaVO();
         despesa = despesas.get(position);
-        descTextView.setText("Descrição: " + despesa.getDescricao());
-        valorTextView.setText("Valor: " + despesa.getValor());
+        descTextView.setText(despesa.getDescricao());
+        valorTextView.setText("R$ " + MetodosComuns.convertToDouble(despesa.getValor()));
         return convertView;
     }
 }

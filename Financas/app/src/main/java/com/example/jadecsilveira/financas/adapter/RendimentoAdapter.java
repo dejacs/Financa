@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.jadecsilveira.financas.R;
+import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.RendimentoVO;
 
 import java.util.ArrayList;
@@ -52,8 +53,8 @@ public class RendimentoAdapter extends BaseAdapter {
 
         RendimentoVO rendimento = new RendimentoVO();
         rendimento = rendimentos.get(position);
-        descTextView.setText("Descrição: " + rendimento.getDescricao());
-        valorTextView.setText("Valor: " + rendimento.getValor());
+        descTextView.setText(rendimento.getDescricao());
+        valorTextView.setText("R$ " + MetodosComuns.convertToDouble(rendimento.getValor()));
         return convertView;
     }
 }

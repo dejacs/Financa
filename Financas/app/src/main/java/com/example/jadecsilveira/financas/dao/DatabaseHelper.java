@@ -19,11 +19,10 @@ import java.util.List;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String BANCO_DE_DADOS = "Financas";
     private static int VERSAO = 1;
 
     public DatabaseHelper(Context context){
-        super(context, BANCO_DE_DADOS, null, VERSAO);
+        super(context, Constantes.BANCO_DE_DADOS, null, VERSAO);
     }
 
     @Override
@@ -35,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         Constantes.VALOR + Constantes.DOUBLE + Constantes.VIRGULA +
                         Constantes.DATA_INICIO + Constantes.DATE + Constantes.VIRGULA +
                         Constantes.DATA_FIM + Constantes.DATE + Constantes.VIRGULA +
-                        Constantes.DATA_INCLUSAO + Constantes.DATE +
+                        Constantes.USUARIO_INCLUSAO + Constantes.TEXT +
                         ");"
         );
         db.execSQL(
@@ -45,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         Constantes.VALOR + Constantes.DOUBLE + Constantes.VIRGULA +
                         Constantes.DATA_PAGAMENTO + Constantes.DATE + Constantes.VIRGULA +
                         Constantes.DATA_INCLUSAO + Constantes.DATE +
+                        Constantes.USUARIO_INCLUSAO + Constantes.TEXT +
                         ");"
         );
 
@@ -67,7 +67,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 DespesaVO despesa = new DespesaVO();
                 despesa.setDescricao(cursor.getString(cursor.getColumnIndex(Constantes.DESCRICAO)));
                 despesa.setValor(cursor.getString(cursor.getColumnIndex(Constantes.VALOR)));
-
                 despesas.add(despesa);
             }
         }
@@ -86,7 +85,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 RendimentoVO rendimento = new RendimentoVO();
                 rendimento.setDescricao(cursor.getString(cursor.getColumnIndex(Constantes.DESCRICAO)));
                 rendimento.setValor(cursor.getString(cursor.getColumnIndex(Constantes.VALOR)));
-
                 rendimentos.add(rendimento);
             }
         }
