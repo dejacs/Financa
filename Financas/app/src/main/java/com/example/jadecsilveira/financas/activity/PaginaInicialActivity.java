@@ -1,12 +1,7 @@
 package com.example.jadecsilveira.financas.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,29 +10,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import com.example.jadecsilveira.financas.R;
 
-public class RendimentosActivity extends AppCompatActivity
+public class PaginaInicialActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private DatabaseHelper helper = new DatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rendimentos);
+        setContentView(R.layout.activity_pagina_inicial);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RendimentosActivity.this, InclusaoRendimento.class));
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -47,12 +31,6 @@ public class RendimentosActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor todoCursor = db.rawQuery("SELECT * FROM rendimento", null);
-        ListView listaRendimentos = (ListView) findViewById(R.id.listaRendimentos);
-        RendimentoCursorAdapter rendCursorAdpt = new RendimentoCursorAdapter(this, todoCursor);
-        listaRendimentos.setAdapter(rendCursorAdpt);
     }
 
     @Override
@@ -68,7 +46,7 @@ public class RendimentosActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.rendimentos, menu);
+        getMenuInflater().inflate(R.menu.pagina_inicial, menu);
         return true;
     }
 
@@ -94,17 +72,18 @@ public class RendimentosActivity extends AppCompatActivity
         int id = item.getItemId();
         Intent intent = null;
 
-        if (id == R.id.nav_pagina_inicial) {
-            intent = new Intent(RendimentosActivity.this, PaginaInicial.class);
+        if (id == R.id.nav_despesas) {
+            intent = new Intent(PaginaInicialActivity.this, DespesaActivity.class);
+            this.finish();
             startActivity(intent);
-        } else if (id == R.id.nav_despesas) {
-            intent = new Intent(RendimentosActivity.this, DespesasActivity.class);
+        } else if (id == R.id.nav_rendimentos) {
+            intent = new Intent(PaginaInicialActivity.this, RendimentoActivity.class);
+            this.finish();
             startActivity(intent);
         }
-        RendimentosActivity.this.overridePendingTransition(0, 0);
+        PaginaInicialActivity.this.overridePendingTransition(0, 0);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        this.finish();
         return true;
     }
 }

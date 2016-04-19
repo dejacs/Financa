@@ -2,7 +2,6 @@ package com.example.jadecsilveira.financas.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,17 +9,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.jadecsilveira.financas.R;
+import com.example.jadecsilveira.financas.dao.DatabaseHelper;
+import com.example.jadecsilveira.financas.util.Constantes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class InclusaoRendimento extends AppCompatActivity {
+public class InclusaoDespesaActivity extends AppCompatActivity {
 
     private DatabaseHelper helper = new DatabaseHelper(this);
     private EditText descricao, valor;
@@ -28,10 +23,10 @@ public class InclusaoRendimento extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inclusao_rendimento);
+        setContentView(R.layout.activity_inclusao_despesa);
 
-        descricao = (EditText) findViewById(R.id.descRend);
-        valor = (EditText) findViewById(R.id.valorRend);
+        descricao = (EditText) findViewById(R.id.descDespesa);
+        valor = (EditText) findViewById(R.id.valorDespesa);
         helper = new DatabaseHelper(this);
     }
     @Override
@@ -49,17 +44,17 @@ public class InclusaoRendimento extends AppCompatActivity {
             SQLiteDatabase db = helper.getWritableDatabase();
             ContentValues values = new ContentValues();
 
-            values.put("descricao", descricao.getText().toString());
-            values.put("valor", valor.getText().toString());
+            values.put(Constantes.DESCRICAO, descricao.getText().toString());
+            values.put(Constantes.VALOR, valor.getText().toString());
 
-            long resultado = db.insert("rendimento", null, values);
+            long resultado = db.insert(Constantes.TABELA_DESPESA, null, values);
             if(resultado != -1 ){
-                Toast.makeText(this, getString(R.string.registro_salvo),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.registro_salvo), Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(this, getString(R.string.erro_salvar),Toast.LENGTH_SHORT).show();
             }
         }
-        intent = new Intent(InclusaoRendimento.this, RendimentosActivity.class);
+        intent = new Intent(InclusaoDespesaActivity.this, DespesaActivity.class);
         startActivity(intent);
         this.finish();
         return true;

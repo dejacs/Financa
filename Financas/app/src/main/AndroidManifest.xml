@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.PaginaInicial"
+            android:name=".activity.PaginaInicialActivity"
             android:label="@string/title_activity_pagina_inicial"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -26,17 +26,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.DespesasActivity"
+            android:name=".activity.DespesaActivity"
             android:label="@string/title_activity_despesas"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.RendimentosActivity"
+            android:name=".activity.RendimentoActivity"
             android:label="@string/title_activity_rendimentos"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.InclusaoDespesa"
+            android:name=".activity.InclusaoDespesaActivity"
             android:label="@string/adicionar" />
-        <activity android:name=".activity.InclusaoRendimento"
+        <activity android:name=".activity.InclusaoRendimentoActivity"
             android:label="@string/adicionar" />
     </application>
 

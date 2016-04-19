@@ -1,9 +1,12 @@
 package com.example.jadecsilveira.financas.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
 import android.support.design.widget.NavigationView;
-import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,18 +14,38 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.example.jadecsilveira.financas.R;
+import com.example.jadecsilveira.financas.adapter.DespesaAdapter;
+import com.example.jadecsilveira.financas.adapter.RendimentoAdapter;
+import com.example.jadecsilveira.financas.dao.DatabaseHelper;
+import com.example.jadecsilveira.financas.vo.RendimentoVO;
 
-public class PaginaInicial extends AppCompatActivity
+import java.util.ArrayList;
+
+public class RendimentoActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DatabaseHelper helper = new DatabaseHelper(this);
+    private ArrayList<RendimentoVO> rendimentos;
+    private ListView gridRendimentos;
+    RendimentoAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pagina_inicial);
+        setContentView(R.layout.activity_rendimentos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RendimentoActivity.this, InclusaoRendimentoActivity.class));
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -32,6 +55,13 @@ public class PaginaInicial extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        DatabaseHelper db = new DatabaseHelper(this);
+        gridRendimentos = (ListView) findViewById(R.id.gridRendimentos);
+        rendimentos = new ArrayList<>();
+        rendimentos = db.getRendimentos();
+        adapter = new RendimentoAdapter(this, rendimentos);
+        gridRendimentos.setAdapter(adapter);
     }
 
     @Override
@@ -47,7 +77,7 @@ public class PaginaInicial extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.pagina_inicial, menu);
+        getMenuInflater().inflate(R.menu.rendimentos, menu);
         return true;
     }
 
@@ -73,18 +103,17 @@ public class PaginaInicial extends AppCompatActivity
         int id = item.getItemId();
         Intent intent = null;
 
-        if (id == R.id.nav_despesas) {
-            intent = new Intent(PaginaInicial.this, DespesasActivity.class);
-            this.finish();
+        if (id == R.id.nav_pagina_inicial) {
+            intent = new Intent(RendimentoActivity.this, PaginaInicialActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_rendimentos) {
-            intent = new Intent(PaginaInicial.this, RendimentosActivity.class);
-            this.finish();
+        } else if (id == R.id.nav_despesas) {
+            intent = new Intent(RendimentoActivity.this, DespesaActivity.class);
             startActivity(intent);
         }
-        PaginaInicial.this.overridePendingTransition(0, 0);
+        RendimentoActivity.this.overridePendingTransition(0, 0);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        this.finish();
         return true;
     }
 }

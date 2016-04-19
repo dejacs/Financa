@@ -1,9 +1,9 @@
-package com.example.jadecsilveira.financas.activity;
+package com.example.jadecsilveira.financas.vo;
 
 /**
- * Created by jadecsilveira on 15/04/2016.
+ * Created by jadecsilveira on 19/04/2016.
  */
-public class RendimentoVO {
+public class DespesaVO {
 
     private String id;
     private String descricao;

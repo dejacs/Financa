@@ -3,7 +3,6 @@ package com.example.jadecsilveira.financas.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,11 +12,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
+import android.widget.ListView;
 
 import com.example.jadecsilveira.financas.R;
+import com.example.jadecsilveira.financas.adapter.DespesaAdapter;
+import com.example.jadecsilveira.financas.dao.DatabaseHelper;
+import com.example.jadecsilveira.financas.vo.DespesaVO;
 
-public class DespesasActivity extends AppCompatActivity
+import java.util.ArrayList;
+
+public class DespesaActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    ListView gridDespesas;
+    ArrayList<DespesaVO> despesas;
+    DespesaAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +40,7 @@ public class DespesasActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DespesasActivity.this, InclusaoDespesa.class));
+                startActivity(new Intent(DespesaActivity.this, InclusaoDespesaActivity.class));
             }
         });
 
@@ -42,6 +52,13 @@ public class DespesasActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        gridDespesas = (ListView) findViewById(R.id.gridDespesas);
+        DatabaseHelper db = new DatabaseHelper(this);
+        despesas = new ArrayList<>();
+        despesas = db.getDespesas();
+        adapter = new DespesaAdapter(this, despesas);
+        gridDespesas.setAdapter(adapter);
     }
 
     @Override
@@ -84,13 +101,13 @@ public class DespesasActivity extends AppCompatActivity
         Intent intent = null;
 
         if (id == R.id.nav_pagina_inicial) {
-            intent = new Intent(DespesasActivity.this, PaginaInicial.class);
+            intent = new Intent(DespesaActivity.this, PaginaInicialActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_rendimentos) {
-            intent = new Intent(DespesasActivity.this, RendimentosActivity.class);
+            intent = new Intent(DespesaActivity.this, RendimentoActivity.class);
             startActivity(intent);
         }
-        DespesasActivity.this.overridePendingTransition(0, 0);
+        DespesaActivity.this.overridePendingTransition(0, 0);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         this.finish();
