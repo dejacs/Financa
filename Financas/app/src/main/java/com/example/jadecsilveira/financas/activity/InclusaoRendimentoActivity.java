@@ -13,11 +13,13 @@ import android.widget.Toast;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
+import com.example.jadecsilveira.financas.util.Constantes;
+import com.example.jadecsilveira.financas.util.MetodosComuns;
 
 public class InclusaoRendimentoActivity extends AppCompatActivity {
 
     private DatabaseHelper helper = new DatabaseHelper(this);
-    private EditText descricao, valor;
+    private EditText descricao, valor, dataInicio, dataFim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +45,13 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
             SQLiteDatabase db = helper.getWritableDatabase();
             ContentValues values = new ContentValues();
 
-            values.put("descricao", descricao.getText().toString());
-            values.put("valor", valor.getText().toString());
+            values.put(Constantes.DESCRICAO, descricao.getText().toString());
+            values.put(Constantes.VALOR, valor.getText().toString());
+            values.put(Constantes.DATA_INICIO, MetodosComuns.convertToDateSQL(dataInicio.getText().toString()));
+            values.put(Constantes.DATA_FIM, MetodosComuns.convertToDateSQL(dataFim.getText().toString()));
+            values.put(Constantes.USUARIO_INCLUSAO, Constantes.LOGIN);
 
-            long resultado = db.insert("rendimento", null, values);
+            long resultado = db.insert(Constantes.TABELA_RENDIMENTO, null, values);
             if(resultado != -1 ){
                 Toast.makeText(this, getString(R.string.registro_salvo),Toast.LENGTH_SHORT).show();
             }else{

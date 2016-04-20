@@ -1,5 +1,7 @@
 package com.example.jadecsilveira.financas.vo;
 
+import java.util.Date;
+
 /**
  * Created by jadecsilveira on 15/04/2016.
  */
@@ -8,6 +10,15 @@ public class RendimentoVO {
     private String id;
     private String descricao;
     private String valor;
+    private Date dataPagamento;
+
+    public Date getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(Date dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
 
     public String getId() {
         return id;

@@ -14,11 +14,12 @@ import android.widget.Toast;
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
+import com.example.jadecsilveira.financas.util.MetodosComuns;
 
 public class InclusaoDespesaActivity extends AppCompatActivity {
 
     private DatabaseHelper helper = new DatabaseHelper(this);
-    private EditText descricao, valor;
+    private EditText descricao, valor, dataDespesa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class InclusaoDespesaActivity extends AppCompatActivity {
 
         descricao = (EditText) findViewById(R.id.descDespesa);
         valor = (EditText) findViewById(R.id.valorDespesa);
+        dataDespesa = (EditText) findViewById(R.id.dataDespesa);
         helper = new DatabaseHelper(this);
     }
     @Override
@@ -46,6 +48,8 @@ public class InclusaoDespesaActivity extends AppCompatActivity {
 
             values.put(Constantes.DESCRICAO, descricao.getText().toString());
             values.put(Constantes.VALOR, valor.getText().toString());
+            values.put(Constantes.DATA_DESPESA, MetodosComuns.convertToDateSQL(dataDespesa.getText().toString()));
+            values.put(Constantes.USUARIO_INCLUSAO, Constantes.LOGIN);
 
             long resultado = db.insert(Constantes.TABELA_DESPESA, null, values);
             if(resultado != -1 ){

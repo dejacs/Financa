@@ -19,6 +19,7 @@ public class Constantes {
     public static final String DATA_FIM = "dataFim";
     public static final String DATA_INCLUSAO = "dataInclusao";
     public static final String DATA_PAGAMENTO = "dataPagamento";
+    public static final String DATA_DESPESA = "dataDespesa";
     public static final String USUARIO_INCLUSAO = "usuarioInclusao";
 
     /** TIPAGEM DO BANCO */
@@ -30,7 +31,14 @@ public class Constantes {
     public static final String CREATE_TABLE = " CREATE TABLE ";
     public static final String WHERE = " WHERE ";
     public static final String IGUAL = " = ";
+    public static final String MAIOR_IGUAL = " >= ";
+    public static final String MENOR = " < ";
+    public static final String INTERROGACAO = " ? ";
+    public static final String AND = " AND ";
 
     /** PONTUAÇÕES */
     public static final String VIRGULA = ",";
+
+    /** LOGIN TEMPORARIO */
+    public static final String LOGIN = "0000001";
 }

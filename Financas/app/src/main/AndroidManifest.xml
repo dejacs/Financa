@@ -36,7 +36,8 @@
         <activity
             android:name=".activity.InclusaoDespesaActivity"
             android:label="@string/adicionar" />
-        <activity android:name=".activity.InclusaoRendimentoActivity"
+        <activity
+            android:name=".activity.InclusaoRendimentoActivity"
             android:label="@string/adicionar" />
     </application>
 

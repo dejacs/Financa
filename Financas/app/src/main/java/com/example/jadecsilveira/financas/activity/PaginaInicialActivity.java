@@ -11,13 +11,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.example.jadecsilveira.financas.R;
+import com.example.jadecsilveira.financas.adapter.BalancoAdapter;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
+import com.example.jadecsilveira.financas.vo.Balanco;
+
+import java.util.ArrayList;
 
 public class PaginaInicialActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DatabaseHelper helper;
+    ListView gridBalanco;
+    ArrayList<Balanco> balancos;
+    BalancoAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +45,13 @@ public class PaginaInicialActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        helper = new DatabaseHelper(this);
+        gridBalanco = (ListView) findViewById(R.id.gridBalanco);
+        balancos = new ArrayList<>();
+        balancos = helper.getBalancos();
+        adapter = new BalancoAdapter(this, balancos);
+        gridBalanco.setAdapter(adapter);
     }
 
     @Override
