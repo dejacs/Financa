@@ -8,8 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.jadecsilveira.financas.R;
+import com.example.jadecsilveira.financas.control.ControleLancamento;
 import com.example.jadecsilveira.financas.util.MetodosComuns;
-import com.example.jadecsilveira.financas.vo.DespesaVO;
+import com.example.jadecsilveira.financas.vo.AgendamentoVO;
 
 import java.util.ArrayList;
 
@@ -19,17 +20,17 @@ import java.util.ArrayList;
 public class DespesaAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<DespesaVO> despesas;
+    ArrayList<AgendamentoVO> agendamentos;
     private static LayoutInflater inflater = null;
 
-    public DespesaAdapter(Context context, ArrayList<DespesaVO> despesas){
+    public DespesaAdapter(Context context, ArrayList<AgendamentoVO> agendamentos){
         this.context = context;
-        this.despesas = despesas;
+        this.agendamentos = agendamentos;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
     public int getCount() {
-        return despesas.size();
+        return agendamentos.size();
     }
 
     @Override
@@ -44,16 +45,7 @@ public class DespesaAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null)
-            convertView = inflater.inflate(R.layout.grid_despesas, null);
-
-        TextView descTextView = (TextView) convertView.findViewById(R.id.tvDescricao);
-        TextView valorTextView = (TextView) convertView.findViewById(R.id.tvValor);
-
-        DespesaVO despesa = new DespesaVO();
-        despesa = despesas.get(position);
-        descTextView.setText(despesa.getDescricao());
-        valorTextView.setText("R$ " + MetodosComuns.convertToDouble(despesa.getValor()));
-        return convertView;
+        ControleLancamento controle = new ControleLancamento();
+        return controle.setAdapter(agendamentos, position, convertView, R.layout.grid_despesas, inflater);
     }
 }

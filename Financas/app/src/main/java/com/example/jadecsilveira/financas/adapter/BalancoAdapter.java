@@ -9,8 +9,9 @@ import android.widget.TextView;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.util.MetodosComuns;
-import com.example.jadecsilveira.financas.vo.Balanco;
+import com.example.jadecsilveira.financas.vo.BalancoVO;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -18,10 +19,10 @@ import java.util.ArrayList;
  */
 public class BalancoAdapter extends BaseAdapter {
     Context context;
-    ArrayList<Balanco> balancos;
+    ArrayList<BalancoVO> balancos;
     private static LayoutInflater inflater = null;
 
-    public BalancoAdapter(Context context, ArrayList<Balanco> balancos){
+    public BalancoAdapter(Context context, ArrayList<BalancoVO> balancos){
         this.context = context;
         this.balancos = balancos;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -49,9 +50,9 @@ public class BalancoAdapter extends BaseAdapter {
         TextView tvDataPagamento = (TextView) convertView.findViewById(R.id.tvDataPagamento);
         TextView valorTextView = (TextView) convertView.findViewById(R.id.tvValor);
 
-        Balanco balanco = new Balanco();
+        BalancoVO balanco = new BalancoVO();
         balanco = balancos.get(position);
-        tvDataPagamento.setText(balanco.getData().toString());
+        tvDataPagamento.setText(new SimpleDateFormat("dd/MM/yyyy").format(balanco.getData()));
         valorTextView.setText("R$ " + MetodosComuns.convertToDouble(balanco.getValor()));
         return convertView;
     }

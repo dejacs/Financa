@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by jadecsilveira on 20/04/2016.
  */
-public class Balanco {
+public class BalancoVO {
     private Date data;
     private String valor;
 

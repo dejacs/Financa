@@ -1,7 +1,6 @@
 package com.example.jadecsilveira.financas.activity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,23 +10,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.adapter.BalancoAdapter;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
-import com.example.jadecsilveira.financas.vo.Balanco;
+import com.example.jadecsilveira.financas.vo.BalancoVO;
 
 import java.util.ArrayList;
 
 public class PaginaInicialActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DatabaseHelper helper;
     ListView gridBalanco;
-    ArrayList<Balanco> balancos;
+    ArrayList<BalancoVO> balancos;
     BalancoAdapter adapter;
 
     @Override
@@ -42,16 +39,9 @@ public class PaginaInicialActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+        this.deleteDatabase(Constantes.BANCO_DE_DADOS);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        helper = new DatabaseHelper(this);
-        gridBalanco = (ListView) findViewById(R.id.gridBalanco);
-        balancos = new ArrayList<>();
-        balancos = helper.getBalancos();
-        adapter = new BalancoAdapter(this, balancos);
-        gridBalanco.setAdapter(adapter);
     }
 
     @Override

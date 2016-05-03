@@ -17,7 +17,7 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/descDespesa"
+            android:id="@+id/descricao"
             android:textSize="20dp"
             android:textAlignment="center"
             android:hint="@string/descricao"
@@ -29,12 +29,12 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/valorDespesa"
+            android:id="@+id/valor"
             android:textSize="20dp"
             android:textAlignment="center"
             android:hint="@string/valor"
             android:numeric="decimal"
-            android:layout_below="@+id/descRend"
+            android:layout_below="@+id/descricao"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="69dp" />
@@ -47,7 +47,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dataDespesa"
+                android:id="@+id/data"
                 android:layout_weight="1"
                 android:textSize="20dp"
                 android:textAlignment="center"

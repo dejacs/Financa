@@ -20,6 +20,8 @@ import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.adapter.DespesaAdapter;
 import com.example.jadecsilveira.financas.adapter.RendimentoAdapter;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
+import com.example.jadecsilveira.financas.util.Constantes;
+import com.example.jadecsilveira.financas.vo.AgendamentoVO;
 import com.example.jadecsilveira.financas.vo.RendimentoVO;
 
 import java.util.ArrayList;
@@ -27,10 +29,9 @@ import java.util.ArrayList;
 public class RendimentoActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DatabaseHelper helper = new DatabaseHelper(this);
-    private ArrayList<RendimentoVO> rendimentos;
     private ListView gridRendimentos;
     RendimentoAdapter adapter;
+    ArrayList<AgendamentoVO> agendamentos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +57,11 @@ public class RendimentoActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        DatabaseHelper db = new DatabaseHelper(this);
         gridRendimentos = (ListView) findViewById(R.id.gridRendimentos);
-        rendimentos = new ArrayList<>();
-        rendimentos = db.getRendimentos();
-        adapter = new RendimentoAdapter(this, rendimentos);
+        DatabaseHelper db = new DatabaseHelper(this);
+
+        agendamentos = db.getAgendamentos(Constantes.RENDIMENTO);
+        adapter = new RendimentoAdapter(this, agendamentos);
         gridRendimentos.setAdapter(adapter);
     }
 

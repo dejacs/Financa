@@ -2,6 +2,7 @@ package com.example.jadecsilveira.financas.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -14,7 +15,10 @@ public class MetodosComuns {
     }
     public static String convertToDouble(Object valor){
         if(valor.toString().contains(".")){
-            return valor.toString().replace(".", ",");
+            String valorAntesVirgula = valor.toString().substring(0, valor.toString().indexOf("."));
+            String valorDepoisVirgula = valor.toString().substring(valor.toString().indexOf(".")+1, valor.toString().length());
+            String valorFormatado = valorAntesVirgula + "," +valorDepoisVirgula.substring(0, 2);
+            return valorFormatado;
         }else{
             return valor.toString()+",00";
         }
@@ -40,5 +44,26 @@ public class MetodosComuns {
             e.printStackTrace();
             return null;
         }
+    }
+    public static String convertToDateBetween(String data){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(data));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        c.add(Calendar.DATE, 1);
+        return sdf.format(c.getTime());
+    }
+
+    public static String convertDateToStringSQL(Date data){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(data);
+    }
+
+    public static String convertDateToStringView(Date data){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(data);
     }
 }

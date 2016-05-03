@@ -18,7 +18,10 @@ import android.widget.ListView;
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.adapter.DespesaAdapter;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
+import com.example.jadecsilveira.financas.util.Constantes;
+import com.example.jadecsilveira.financas.vo.AgendamentoVO;
 import com.example.jadecsilveira.financas.vo.DespesaVO;
+import com.example.jadecsilveira.financas.vo.LancamentoVO;
 
 import java.util.ArrayList;
 
@@ -26,8 +29,8 @@ public class DespesaActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ListView gridDespesas;
-    ArrayList<DespesaVO> despesas;
     DespesaAdapter adapter;
+    ArrayList<AgendamentoVO> agendamentos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +58,9 @@ public class DespesaActivity extends AppCompatActivity
 
         gridDespesas = (ListView) findViewById(R.id.gridDespesas);
         DatabaseHelper db = new DatabaseHelper(this);
-        despesas = new ArrayList<>();
-        despesas = db.getDespesas();
-        adapter = new DespesaAdapter(this, despesas);
+
+        agendamentos = db.getAgendamentos(Constantes.DESPESA);
+        adapter = new DespesaAdapter(this, agendamentos);
         gridDespesas.setAdapter(adapter);
     }
 

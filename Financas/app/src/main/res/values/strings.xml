@@ -28,4 +28,7 @@
     <string name="erro_salvar">Erro ao Salvar</string>
     <string name="registro_salvo">Registro Salvo</string>
     <string name="title_activity_login">Login</string>
+    <string name="title_activity_lancamento">Lancamentos</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

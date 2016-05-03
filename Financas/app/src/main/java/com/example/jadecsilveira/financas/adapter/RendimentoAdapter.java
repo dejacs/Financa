@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.jadecsilveira.financas.R;
+import com.example.jadecsilveira.financas.control.ControleLancamento;
 import com.example.jadecsilveira.financas.util.MetodosComuns;
+import com.example.jadecsilveira.financas.vo.AgendamentoVO;
 import com.example.jadecsilveira.financas.vo.RendimentoVO;
 
 import java.util.ArrayList;
@@ -20,17 +22,17 @@ public class RendimentoAdapter extends BaseAdapter {
 
 
     Context context;
-    ArrayList<RendimentoVO> rendimentos;
+    ArrayList<AgendamentoVO> agendamentos;
     private static LayoutInflater inflater = null;
 
-    public RendimentoAdapter(Context context, ArrayList<RendimentoVO> rendimentos){
+    public RendimentoAdapter(Context context, ArrayList<AgendamentoVO> agendamentos){
         this.context = context;
-        this.rendimentos = rendimentos;
+        this.agendamentos = agendamentos;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
     public int getCount() {
-        return rendimentos.size();
+        return agendamentos.size();
     }
 
     @Override
@@ -45,16 +47,7 @@ public class RendimentoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null)
-            convertView = inflater.inflate(R.layout.grid_despesas, null);
-
-        TextView descTextView = (TextView) convertView.findViewById(R.id.tvDescricao);
-        TextView valorTextView = (TextView) convertView.findViewById(R.id.tvValor);
-
-        RendimentoVO rendimento = new RendimentoVO();
-        rendimento = rendimentos.get(position);
-        descTextView.setText(rendimento.getDescricao());
-        valorTextView.setText("R$ " + MetodosComuns.convertToDouble(rendimento.getValor()));
-        return convertView;
+        ControleLancamento controle = new ControleLancamento();
+        return controle.setAdapter(agendamentos, position, convertView, R.layout.grid_rendimentos, inflater);
     }
 }

@@ -1,20 +1,24 @@
 package com.example.jadecsilveira.financas.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.ContactsContract;
+import android.widget.Toast;
 
+import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.util.Constantes;
 import com.example.jadecsilveira.financas.util.MetodosComuns;
-import com.example.jadecsilveira.financas.vo.Balanco;
+import com.example.jadecsilveira.financas.vo.AgendamentoVO;
+import com.example.jadecsilveira.financas.vo.BalancoVO;
 import com.example.jadecsilveira.financas.vo.DespesaVO;
+import com.example.jadecsilveira.financas.vo.LancamentoVO;
 import com.example.jadecsilveira.financas.vo.RendimentoVO;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by jadecsilveira on 15/04/2016.
@@ -30,23 +34,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
-                Constantes.CREATE_TABLE + Constantes.TABELA_DESPESA + " (" +
-                        Constantes.ID + Constantes.INTEGER + Constantes.PRIMARY_KEY + Constantes.VIRGULA +
-                        Constantes.DESCRICAO + Constantes.TEXT + Constantes.VIRGULA +
-                        Constantes.VALOR + Constantes.DOUBLE + Constantes.VIRGULA +
-                        Constantes.DATA_INICIO + Constantes.DATE + Constantes.VIRGULA +
-                        Constantes.DATA_FIM + Constantes.DATE + Constantes.VIRGULA +
-                        Constantes.USUARIO_INCLUSAO + Constantes.TEXT +
+                "CREATE TABLE agendamento(" +
+                        "_id LONG PRIMARY KEY," +
+                        "id_lancamento LONG," +
+                        "data DATE" +
                         ");"
         );
         db.execSQL(
-                Constantes.CREATE_TABLE + Constantes.TABELA_RENDIMENTO + " (" +
-                        Constantes.ID + Constantes.INTEGER + Constantes.PRIMARY_KEY + Constantes.VIRGULA +
-                        Constantes.DESCRICAO + Constantes.TEXT + Constantes.VIRGULA +
-                        Constantes.VALOR + Constantes.DOUBLE + Constantes.VIRGULA +
-                        Constantes.DATA_PAGAMENTO + Constantes.DATE + Constantes.VIRGULA +
-                        Constantes.DATA_INCLUSAO + Constantes.DATE +
-                        Constantes.USUARIO_INCLUSAO + Constantes.TEXT +
+                "CREATE TABLE lancamento(" +
+                        "_id LONG PRIMARY KEY," +
+                        "descricao TEXT," +
+                        "valor DOUBLE," +
+                        "usuario TEXT," +
+                        "tipo TEXT" +
                         ");"
         );
 
@@ -57,76 +57,148 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<DespesaVO> getDespesas(){
-        String query = "SELECT * FROM ".concat(Constantes.TABELA_DESPESA).
-                concat(Constantes.WHERE).concat(Constantes.USUARIO_INCLUSAO).concat(Constantes.IGUAL).concat(Constantes.INTERROGACAO);
+    public boolean incluirLancamento(AgendamentoVO agendamento){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
-        ArrayList<DespesaVO> despesas = new ArrayList<>();
+        values.put(Constantes.DESCRICAO, agendamento.getLancamento().getDescricao());
+        values.put(Constantes.VALOR, agendamento.getLancamento().getValor());
+        values.put(Constantes.USUARIO, Constantes.LOGIN);
+        values.put(Constantes.TIPO, agendamento.getLancamento().getTipo());
+
+        long resultado = db.insert(Constantes.TABELA_LANCAMENTO, null, values);
+        if(resultado != -1 ){
+            agendamento.getLancamento().setId(resultado);
+            if(incluirAgendamento(agendamento)){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+    private boolean incluirAgendamento(AgendamentoVO agendamento){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Constantes.DATA, MetodosComuns.convertDateToStringSQL(agendamento.getData()));
+        values.put(Constantes.ID_LANCAMENTO, agendamento.getLancamento().getId());
+
+        long resultado = db.insert(Constantes.TABELA_AGENDAMENTO, null, values);
+        if(resultado != -1 ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public ArrayList<AgendamentoVO> getAgendamentos(String tipo){
+        String query = "SELECT DISTINCT L.descricao, L.valor, A.data FROM lancamento L, agendamento A WHERE L.usuario = ? AND L.tipo = '" + tipo + "'";
+
+        ArrayList<AgendamentoVO> agendamentos = new ArrayList<>();
         SQLiteDatabase database = getReadableDatabase();
         Cursor cursor = database.rawQuery(query, new String[]{Constantes.LOGIN});
 
         if(MetodosComuns.isNotNull(cursor)){
             while (cursor.moveToNext()){
-                DespesaVO despesa = new DespesaVO();
-                despesa.setDescricao(cursor.getString(cursor.getColumnIndex(Constantes.DESCRICAO)));
-                despesa.setValor(cursor.getString(cursor.getColumnIndex(Constantes.VALOR)));
-                despesa.setDataDespesa(MetodosComuns.convertToDate(cursor.getString(cursor.getColumnIndex(Constantes.DATA_DESPESA))));
-                despesas.add(despesa);
+                LancamentoVO lancamento = new LancamentoVO();
+                lancamento.setDescricao(cursor.getString(cursor.getColumnIndex(Constantes.DESCRICAO)));
+                lancamento.setValor(cursor.getDouble(cursor.getColumnIndex(Constantes.VALOR)));
+
+                AgendamentoVO agendamento = new AgendamentoVO();
+                agendamento.setData(MetodosComuns.convertToDate(cursor.getString(cursor.getColumnIndex(Constantes.DATA))));
+                agendamento.setLancamento(lancamento);
+
+                agendamentos.add(agendamento);
             }
         }
-        return despesas;
+        return agendamentos;
     }
 
-    public ArrayList<RendimentoVO> getRendimentos(){
-        String query = "SELECT * FROM ".concat(Constantes.TABELA_RENDIMENTO).
-                concat(Constantes.WHERE).concat(Constantes.USUARIO_INCLUSAO).concat(Constantes.IGUAL).concat(Constantes.INTERROGACAO);
-
-        ArrayList<RendimentoVO> rendimentos = new ArrayList<>();
-        SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(Constantes.LOGIN)});
-
-        if(MetodosComuns.isNotNull(cursor)){
-            while (cursor.moveToNext()){
-                RendimentoVO rendimento = new RendimentoVO();
-                rendimento.setDescricao(cursor.getString(cursor.getColumnIndex(Constantes.DESCRICAO)));
-                rendimento.setValor(cursor.getString(cursor.getColumnIndex(Constantes.VALOR)));
-                rendimento.setDataPagamento(MetodosComuns.convertToDate(cursor.getString(cursor.getColumnIndex(Constantes.DATA_PAGAMENTO))));
-                rendimentos.add(rendimento);
-            }
-        }
-        return rendimentos;
-    }
-
-    public ArrayList<Balanco> getBalancos(){
+    /* public ArrayList<BalancoVO> getBalancosTeste(){
         String dataPagamentoAnterior = "0000-00-00";
         ArrayList<RendimentoVO> rendimentos = getRendimentos();
-        ArrayList<Balanco> balancos = new ArrayList<>();
+        ArrayList<DespesaVO> despesaVOs = getDespesas();
+        ArrayList<BalancoVO> balancos = new ArrayList<>();
+        Double balanco = 0.;
 
         if(!rendimentos.isEmpty()) {
             for (RendimentoVO rendimento : rendimentos) {
-                ArrayList<DespesaVO> despesas = getDespesasEntreDatas(dataPagamentoAnterior, MetodosComuns.convertToDateSQL(rendimento.getDataPagamento().toString()));
-                Double somaDespesas = 0., balanco = 0.;
-
+                ArrayList<DespesaVO> despesas = getDespesasEntreDatas(dataPagamentoAnterior, new SimpleDateFormat("yyyy-MM-dd").format(rendimento.getDataPagamento()));
+                Double somaDespesas = 0.;
                 if(!despesas.isEmpty()) {
                     for (DespesaVO despesa : despesas) {
                         somaDespesas = somaDespesas + new Double(despesa.getValor());
                     }
                 }
                 balanco = (new Double(rendimento.getValor()) - somaDespesas) + balanco;
-                Balanco balancoVO = new Balanco();
+                BalancoVO balancoVO = new BalancoVO();
                 balancoVO.setValor(balanco.toString());
                 balancoVO.setData(rendimento.getDataPagamento());
                 balancos.add(balancoVO);
+
+                dataPagamentoAnterior = new SimpleDateFormat("yyyy-MM-dd").format(rendimento.getDataPagamento());
             }
         }
         return balancos;
     }
 
-    public ArrayList<DespesaVO> getDespesasEntreDatas(String dataInicio, String dataFim){
+    public ArrayList<BalancoVO> getBalancos(){
+        ArrayList<RendimentoVO> rendimentos = getRendimentos();
+        ArrayList<DespesaVO> despesas = getDespesas();
+        ArrayList<BalancoVO> balancos = new ArrayList<>();
+        BalancoVO balanco = new BalancoVO();
+
+        if((despesas.isEmpty() && !rendimentos.isEmpty()) || (!rendimentos.isEmpty() && rendimentos.get(0).getDataPagamento().before(despesas.get(0).getDataDespesa()))){
+            balanco.setValor(rendimentos.get(0).getValor());
+            balanco.setData(rendimentos.get(0).getDataPagamento());
+            balancos.add(balanco);
+        }if(despesas.get(0)==null && rendimentos.get(0)==null){
+            return balancos;
+        }
+        ArrayList<Date> datasPagamentoPosterior = new ArrayList<>();
+        for (RendimentoVO rendimento : rendimentos) {
+            datasPagamentoPosterior.add(rendimento.getDataPagamento());
+        }
+        datasPagamentoPosterior.remove(0);
+        Double saldo = 0.;
+
+        for (DespesaVO despesa : despesas) {
+            if(rendimentos.isEmpty()){
+                saldo = saldo-new Double(despesa.getValor());
+                balanco.setValor(saldo.toString());
+                balanco.setData(despesa.getDataDespesa());
+                balancos.add(balanco);
+            }else{
+                outerloop:
+                    for (RendimentoVO rendimento : rendimentos) {
+                        for (Date dataPagamentoPosterior : datasPagamentoPosterior) {
+                            if((despesa.getDataDespesa().equals(rendimento.getDataPagamento()) || despesa.getDataDespesa().after(rendimento.getDataPagamento())) && despesa.getDataDespesa().before(dataPagamentoPosterior)){
+                                saldo = saldo + (new Double(rendimento.getValor())-new Double(despesa.getValor()));
+                                balanco.setValor(saldo.toString());
+                                balanco.setData(despesa.getDataDespesa());
+                                balancos.add(balanco);
+                                break outerloop;
+                            }else{
+                                saldo = saldo + (new Double(rendimento.getValor())-new Double(despesa.getValor()));
+                                balanco.setValor(saldo.toString());
+                                balanco.setData(despesa.getDataDespesa());
+                                balancos.add(balanco);
+                                break outerloop;
+                            }
+                        }
+                    }
+            }
+        }
+        return balancos;
+    }*/
+
+    /** public ArrayList<DespesaVO> getDespesasEntreDatas(String dataInicio, String dataFim){
         String query = "SELECT * FROM ".concat(Constantes.TABELA_DESPESA).
                 concat(Constantes.WHERE).concat(Constantes.USUARIO_INCLUSAO).concat(Constantes.IGUAL).concat(Constantes.INTERROGACAO).
-                concat(Constantes.AND).concat(Constantes.DATA_DESPESA).concat(Constantes.MAIOR_IGUAL).concat(Constantes.INTERROGACAO).
-                concat(Constantes.AND).concat(Constantes.DATA_DESPESA).concat(Constantes.MENOR).concat(Constantes.INTERROGACAO);
+                concat(Constantes.AND).concat(Constantes.DATA_DESPESA).concat(Constantes.MAIOR).concat("date(").concat(Constantes.INTERROGACAO).concat(")").
+                concat(Constantes.AND).concat(Constantes.DATA_DESPESA).concat(Constantes.MENOR_IGUAL).concat("date(").concat(Constantes.INTERROGACAO).concat(")");
 
         ArrayList<DespesaVO> despesas = new ArrayList<>();
         SQLiteDatabase database = getReadableDatabase();
@@ -143,4 +215,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return despesas;
     }
+    public ArrayList<RendimentoVO> getRendimentosEntreDatas(String dataInicio, String dataFim){
+        String query = "SELECT * FROM ".concat(Constantes.TABELA_RENDIMENTO).
+                concat(Constantes.WHERE).concat(Constantes.USUARIO_INCLUSAO).concat(Constantes.IGUAL).concat(Constantes.INTERROGACAO).
+                concat(Constantes.AND).concat(Constantes.DATA_PAGAMENTO).concat(Constantes.MAIOR).concat(Constantes.INTERROGACAO).
+                concat(Constantes.AND).concat(Constantes.DATA_PAGAMENTO).concat(Constantes.MENOR_IGUAL).concat(Constantes.INTERROGACAO);
+
+        ArrayList<RendimentoVO> rendimentoVOs = new ArrayList<>();
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, new String[]{Constantes.LOGIN, dataInicio, dataFim});
+
+        if(MetodosComuns.isNotNull(cursor)){
+            while (cursor.moveToNext()){
+                RendimentoVO rendimentoVO = new RendimentoVO();
+                rendimentoVO .setDescricao(cursor.getString(cursor.getColumnIndex(Constantes.DESCRICAO)));
+                rendimentoVO .setValor(cursor.getString(cursor.getColumnIndex(Constantes.VALOR)));
+                rendimentoVO .setDataPagamento(MetodosComuns.convertToDate(cursor.getString(cursor.getColumnIndex(Constantes.DATA_PAGAMENTO))));
+                rendimentoVOs.add(rendimentoVO );
+            }
+        }
+        return rendimentoVOs;
+    } */
 }

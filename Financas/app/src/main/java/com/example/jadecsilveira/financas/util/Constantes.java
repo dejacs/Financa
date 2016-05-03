@@ -8,36 +8,24 @@ public class Constantes {
     public static final String BANCO_DE_DADOS = "Financas";
 
     /** NOMES DAS TABELAS */
-    public static final String TABELA_DESPESA = "despesa";
-    public static final String TABELA_RENDIMENTO = "rendimento";
+    public static final String TABELA_LANCAMENTO = "lancamento";
+    public static final String TABELA_AGENDAMENTO = "agendamento";
+
+    public static final String ID_LANCAMENTO = "id_lancamento";
+    public static final String TIPO = "tipo";
+    public static final String DESPESA = "despesa";
+    public static final String RENDIMENTO = "rendimento";
+
+    /** LISTVIEW */
+    public static final String PRIMEIRA_COLUNA = "First";
+    public static final String SEGUNDA_COLUNA = "Second";
+    public static final String TERCEIRA_COLUNA = "Third";
 
     /** NOMES DAS COLUNAS */
-    public static final String ID = "_id";
     public static final String DESCRICAO = "descricao";
     public static final String VALOR = "valor";
-    public static final String DATA_INICIO = "dataInicio";
-    public static final String DATA_FIM = "dataFim";
-    public static final String DATA_INCLUSAO = "dataInclusao";
-    public static final String DATA_PAGAMENTO = "dataPagamento";
-    public static final String DATA_DESPESA = "dataDespesa";
-    public static final String USUARIO_INCLUSAO = "usuarioInclusao";
-
-    /** TIPAGEM DO BANCO */
-    public static final String INTEGER = " INTEGER ";
-    public static final String TEXT = " TEXT ";
-    public static final String DOUBLE = " DOUBLE ";
-    public static final String DATE = " DATE ";
-    public static final String PRIMARY_KEY = " PRIMARY KEY ";
-    public static final String CREATE_TABLE = " CREATE TABLE ";
-    public static final String WHERE = " WHERE ";
-    public static final String IGUAL = " = ";
-    public static final String MAIOR_IGUAL = " >= ";
-    public static final String MENOR = " < ";
-    public static final String INTERROGACAO = " ? ";
-    public static final String AND = " AND ";
-
-    /** PONTUAÇÕES */
-    public static final String VIRGULA = ",";
+    public static final String DATA = "data";
+    public static final String USUARIO = "usuario";
 
     /** LOGIN TEMPORARIO */
     public static final String LOGIN = "0000001";
