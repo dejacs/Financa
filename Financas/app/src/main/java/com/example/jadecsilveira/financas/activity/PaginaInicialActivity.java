@@ -13,18 +13,19 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.jadecsilveira.financas.R;
-import com.example.jadecsilveira.financas.adapter.BalancoAdapter;
+import com.example.jadecsilveira.financas.adapter.SaldoAdapter;
+import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
-import com.example.jadecsilveira.financas.vo.BalancoVO;
+import com.example.jadecsilveira.financas.vo.AgendamentoVO;
 
 import java.util.ArrayList;
 
 public class PaginaInicialActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ListView gridBalanco;
-    ArrayList<BalancoVO> balancos;
-    BalancoAdapter adapter;
+    ListView gridSaldos;
+    SaldoAdapter adapter;
+    ArrayList<AgendamentoVO> agendamentos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,13 @@ public class PaginaInicialActivity extends AppCompatActivity
         //this.deleteDatabase(Constantes.BANCO_DE_DADOS);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        gridSaldos = (ListView) findViewById(R.id.gridSaldos);
+        DatabaseHelper db = new DatabaseHelper(this);
+
+        agendamentos = db.getSaldos();
+        adapter = new SaldoAdapter(this, agendamentos);
+        gridSaldos.setAdapter(adapter);
     }
 
     @Override
