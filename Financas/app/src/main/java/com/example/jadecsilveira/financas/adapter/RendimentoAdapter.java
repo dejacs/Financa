@@ -5,13 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.control.ControleLancamento;
-import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
-import com.example.jadecsilveira.financas.vo.RendimentoVO;
 
 import java.util.ArrayList;
 
@@ -37,7 +34,7 @@ public class RendimentoAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return agendamentos.get(position);
     }
 
     @Override

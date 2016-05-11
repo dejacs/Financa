@@ -1,6 +1,5 @@
 package com.example.jadecsilveira.financas.control;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +22,6 @@ public class ControleLancamento extends AppCompatActivity {
     private EditText descricao, valor, data;
     LancamentoVO lancamento;
     AgendamentoVO agendamento;
-
-    // Adapter
-    Context context;
-    ArrayList<AgendamentoVO> agendamentos;
 
     public void setCampos(AppCompatActivity activity, Integer layout){
         activity.setContentView(layout);

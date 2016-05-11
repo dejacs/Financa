@@ -5,18 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
-import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.util.Constantes;
 import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
-import com.example.jadecsilveira.financas.vo.BalancoVO;
-import com.example.jadecsilveira.financas.vo.DespesaVO;
 import com.example.jadecsilveira.financas.vo.LancamentoVO;
-import com.example.jadecsilveira.financas.vo.RendimentoVO;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -35,14 +29,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "CREATE TABLE agendamento(" +
-                        "_id LONG PRIMARY KEY," +
+                        "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                         "id_lancamento LONG," +
                         "data DATE" +
                         ");"
         );
         db.execSQL(
                 "CREATE TABLE lancamento(" +
-                        "_id LONG PRIMARY KEY," +
+                        "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                         "descricao TEXT," +
                         "valor DOUBLE," +
                         "usuario TEXT," +
@@ -94,7 +88,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<AgendamentoVO> getAgendamentos(String tipo){
-        String query = "SELECT DISTINCT L.descricao, L.valor, A.data FROM lancamento L, agendamento A WHERE L.usuario = ? AND L.tipo = '" + tipo + "'";
+        String query = "SELECT L.descricao, L.valor, A.data " +
+                "FROM lancamento L " +
+                "INNER JOIN agendamento A " +
+                "ON L._id = A.id_lancamento " +
+                "WHERE L.usuario = ? AND L.tipo = '" + tipo + "'";
 
         ArrayList<AgendamentoVO> agendamentos = new ArrayList<>();
         SQLiteDatabase database = getReadableDatabase();

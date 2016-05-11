@@ -20,8 +20,6 @@ import com.example.jadecsilveira.financas.adapter.DespesaAdapter;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
-import com.example.jadecsilveira.financas.vo.DespesaVO;
-import com.example.jadecsilveira.financas.vo.LancamentoVO;
 
 import java.util.ArrayList;
 

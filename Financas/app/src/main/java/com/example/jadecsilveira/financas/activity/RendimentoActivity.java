@@ -1,8 +1,6 @@
 package com.example.jadecsilveira.financas.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
@@ -17,19 +15,17 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.jadecsilveira.financas.R;
-import com.example.jadecsilveira.financas.adapter.DespesaAdapter;
 import com.example.jadecsilveira.financas.adapter.RendimentoAdapter;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
-import com.example.jadecsilveira.financas.vo.RendimentoVO;
 
 import java.util.ArrayList;
 
 public class RendimentoActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ListView gridRendimentos;
+    ListView gridRendimentos;
     RendimentoAdapter adapter;
     ArrayList<AgendamentoVO> agendamentos;
 

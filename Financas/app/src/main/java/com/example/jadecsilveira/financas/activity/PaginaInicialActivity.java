@@ -14,7 +14,6 @@ import android.widget.ListView;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.adapter.BalancoAdapter;
-import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
 import com.example.jadecsilveira.financas.vo.BalancoVO;
 
@@ -39,7 +38,7 @@ public class PaginaInicialActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        this.deleteDatabase(Constantes.BANCO_DE_DADOS);
+        //this.deleteDatabase(Constantes.BANCO_DE_DADOS);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }

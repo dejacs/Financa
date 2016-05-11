@@ -13,7 +13,6 @@ import com.example.jadecsilveira.financas.control.ControleLancamento;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
-import com.example.jadecsilveira.financas.vo.LancamentoVO;
 
 public class InclusaoDespesaActivity extends AppCompatActivity {
 

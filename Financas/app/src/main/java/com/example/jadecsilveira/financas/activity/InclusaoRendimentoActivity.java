@@ -1,21 +1,17 @@
 package com.example.jadecsilveira.financas.activity;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.control.ControleLancamento;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
-import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
 
 public class InclusaoRendimentoActivity extends AppCompatActivity {

@@ -1,18 +1,18 @@
 package com.example.jadecsilveira.financas.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.control.ControleLancamento;
-import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by jadecsilveira on 19/04/2016.
@@ -28,6 +28,7 @@ public class DespesaAdapter extends BaseAdapter {
         this.agendamentos = agendamentos;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
     @Override
     public int getCount() {
         return agendamentos.size();
@@ -35,7 +36,7 @@ public class DespesaAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return agendamentos.get(position);
     }
 
     @Override

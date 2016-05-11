@@ -17,7 +17,10 @@ public class MetodosComuns {
         if(valor.toString().contains(".")){
             String valorAntesVirgula = valor.toString().substring(0, valor.toString().indexOf("."));
             String valorDepoisVirgula = valor.toString().substring(valor.toString().indexOf(".")+1, valor.toString().length());
-            String valorFormatado = valorAntesVirgula + "," +valorDepoisVirgula.substring(0, 2);
+            if(valorDepoisVirgula.length()>2){
+                valorDepoisVirgula = valorDepoisVirgula.substring(0, 2);
+            }
+            String valorFormatado = valorAntesVirgula + "," +valorDepoisVirgula;
             return valorFormatado;
         }else{
             return valor.toString()+",00";
