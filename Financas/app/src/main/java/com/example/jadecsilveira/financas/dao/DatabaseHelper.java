@@ -10,6 +10,7 @@ import com.example.jadecsilveira.financas.util.Constantes;
 import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
 import com.example.jadecsilveira.financas.vo.LancamentoVO;
+import com.example.jadecsilveira.financas.vo.SaldoVO;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,7 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<AgendamentoVO> getAgendamentos(String tipo){
-        String query = "SELECT L.descricao, L.valor, A.data " +
+        String query = "SELECT L._id, L.descricao, L.valor, A.data " +
                 "FROM lancamento L " +
                 "INNER JOIN agendamento A " +
                 "ON L._id = A.id_lancamento " +
@@ -102,6 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(MetodosComuns.isNotNull(cursor)){
             while (cursor.moveToNext()){
                 LancamentoVO lancamento = new LancamentoVO();
+                lancamento.setId(cursor.getLong(cursor.getColumnIndex(Constantes.ID)));
                 lancamento.setDescricao(cursor.getString(cursor.getColumnIndex(Constantes.DESCRICAO)));
                 lancamento.setValor(cursor.getDouble(cursor.getColumnIndex(Constantes.VALOR)));
 
@@ -115,34 +117,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return agendamentos;
     }
 
-    public ArrayList<AgendamentoVO> getSaldos(){
-        ArrayList<AgendamentoVO> saldos = new ArrayList<>();
+    public ArrayList<SaldoVO> getSaldos(){
+        ArrayList<SaldoVO> saldos = new ArrayList<>();
 
         ArrayList<AgendamentoVO> lancamentos = getTodosAgendamentos();
         Double saldoAtual=0.;
-        AgendamentoVO saldo;
+        SaldoVO saldo;
         LancamentoVO lancamento;
 
         for (AgendamentoVO lancamentoAtual : lancamentos){
-            saldo = new AgendamentoVO();
+            saldo = new SaldoVO();
             lancamento = new LancamentoVO();
             if(lancamentoAtual.getLancamento().getTipo().equals("rendimento")){
                 saldoAtual = saldoAtual + lancamentoAtual.getLancamento().getValor();
-                lancamento.setValor(saldoAtual);
             }else if(lancamentoAtual.getLancamento().getTipo().equals("despesa")){
                 saldoAtual = saldoAtual - lancamentoAtual.getLancamento().getValor();
-                lancamento.setValor(saldoAtual);
             }
-            lancamento.setDescricao(lancamentoAtual.getLancamento().getDescricao());
+            lancamento = lancamentoAtual.getLancamento();
+
             saldo.setLancamento(lancamento);
             saldo.setData(lancamentoAtual.getData());
+            saldo.setValor(saldoAtual);
+
             saldos.add(saldo);
         }
         return saldos;
     }
 
     public ArrayList<AgendamentoVO> getTodosAgendamentos(){
-        String query = "SELECT L.descricao, L.valor, L.tipo, A.data " +
+        String query = "SELECT L._id, L.descricao, L.valor, L.tipo, A.data " +
                 "FROM lancamento L " +
                 "INNER JOIN agendamento A " +
                 "ON L._id = A.id_lancamento " +
@@ -156,6 +159,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(MetodosComuns.isNotNull(cursor)){
             while (cursor.moveToNext()){
                 LancamentoVO lancamento = new LancamentoVO();
+                lancamento.setId(cursor.getLong(cursor.getColumnIndex(Constantes.ID)));
                 lancamento.setDescricao(cursor.getString(cursor.getColumnIndex(Constantes.DESCRICAO)));
                 lancamento.setValor(cursor.getDouble(cursor.getColumnIndex(Constantes.VALOR)));
                 lancamento.setTipo(cursor.getString(cursor.getColumnIndex(Constantes.TIPO)));
@@ -168,5 +172,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return agendamentos;
+    }
+
+    public boolean deletarAgendamento(AgendamentoVO agendamento){
+        SQLiteDatabase database = getReadableDatabase();
+        boolean lancamentoDel = database.delete(Constantes.TABELA_LANCAMENTO, Constantes.ID + "=" + agendamento.getLancamento().getId(), null) > 0;
+        boolean agendamentoDel = database.delete(Constantes.TABELA_AGENDAMENTO, Constantes.ID_LANCAMENTO + "=" + agendamento.getLancamento().getId(), null) > 0;
+        return lancamentoDel && agendamentoDel;
     }
 }

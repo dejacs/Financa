@@ -5,10 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.control.ControleLancamento;
+import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
+import com.example.jadecsilveira.financas.vo.SaldoVO;
 
 import java.util.ArrayList;
 
@@ -17,23 +21,23 @@ import java.util.ArrayList;
  */
 public class SaldoAdapter extends BaseAdapter {
     Context context;
-    ArrayList<AgendamentoVO> agendamentos;
+    ArrayList<SaldoVO> saldos;
     private static LayoutInflater inflater = null;
 
-    public SaldoAdapter(Context context, ArrayList<AgendamentoVO> agendamentos){
+    public SaldoAdapter(Context context, ArrayList<SaldoVO> saldos){
         this.context = context;
-        this.agendamentos = agendamentos;
+        this.saldos = saldos;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return agendamentos.size();
+        return saldos.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return agendamentos.get(position);
+        return saldos.get(position);
     }
 
     @Override
@@ -43,7 +47,31 @@ public class SaldoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ControleLancamento controle = new ControleLancamento();
-        return controle.setAdapter(agendamentos, position, convertView, R.layout.grid_saldos, inflater);
+
+        if (convertView == null)
+            convertView = inflater.inflate(R.layout.grid_saldos, null);
+
+        TextView dataTextView = (TextView) convertView.findViewById(R.id.tvData);
+        TextView descTextView = (TextView) convertView.findViewById(R.id.tvDescricao);
+        TextView rendimentoTextView = (TextView) convertView.findViewById(R.id.tvRendimento);
+        TextView despesaTextView = (TextView) convertView.findViewById(R.id.tvDespesa);
+        TextView valorTextView = (TextView) convertView.findViewById(R.id.tvValor);
+
+        SaldoVO saldo = new SaldoVO();
+        saldo = saldos.get(position);
+
+        dataTextView.setText(MetodosComuns.convertDateToStringView(saldo.getData()));
+        descTextView.setText(saldo.getLancamento().getDescricao());
+        if(saldo.getLancamento().getTipo().equals("rendimento")){
+            rendimentoTextView.setText("+R$ " + MetodosComuns.convertToDouble(saldo.getLancamento().getValor()));
+            despesaTextView.setText(" - ");
+        }else{
+            rendimentoTextView.setText(" - ");
+            despesaTextView.setText("-R$ " + MetodosComuns.convertToDouble(saldo.getLancamento().getValor()));
+        }
+
+        valorTextView.setText("R$ " + MetodosComuns.convertToDouble(saldo.getValor()));
+
+        return convertView;
     }
 }

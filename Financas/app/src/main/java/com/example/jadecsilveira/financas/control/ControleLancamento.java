@@ -53,6 +53,7 @@ public class ControleLancamento extends AppCompatActivity {
         valorTextView.setText("R$ " + MetodosComuns.convertToDouble(agendamento.getLancamento().getValor()));
         dataTextView.setText(MetodosComuns.convertDateToStringView(agendamento.getData()));
 
+
         return convertView;
     }
 }

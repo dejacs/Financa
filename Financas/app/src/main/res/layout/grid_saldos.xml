@@ -8,31 +8,45 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/tvData"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_weight="1"
+        android:textSize="10dp"
+        android:textAlignment="textStart" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/tvDescricao"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_alignParentLeft="true"
         android:layout_weight="1"
-        android:layout_gravity="left"
-        android:textSize="15dp"
+        android:textSize="10dp"
         android:textAlignment="textStart" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRendimento"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_weight="1"
+        android:textSize="10dp"
+        android:textAlignment="textStart"
+        android:textColor="#28ae09"
+        android:layout_marginLeft="5dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDespesa"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_weight="1"
+        android:textSize="10dp"
+        android:textAlignment="textStart"
+        android:textColor="#e62c2c"
+        android:layout_marginLeft="5dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvValor"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_weight="1"
-        android:gravity="left"
-        android:textSize="15dp"
-        android:textAlignment="center" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvData"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="right"
-        android:layout_weight="1"
-        android:textSize="15dp"
+        android:textSize="10dp"
         android:textAlignment="textEnd" />
-
 </LinearLayout>

@@ -15,8 +15,7 @@ import android.widget.ListView;
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.adapter.SaldoAdapter;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
-import com.example.jadecsilveira.financas.util.Constantes;
-import com.example.jadecsilveira.financas.vo.AgendamentoVO;
+import com.example.jadecsilveira.financas.vo.SaldoVO;
 
 import java.util.ArrayList;
 
@@ -25,7 +24,7 @@ public class PaginaInicialActivity extends AppCompatActivity
 
     ListView gridSaldos;
     SaldoAdapter adapter;
-    ArrayList<AgendamentoVO> agendamentos;
+    ArrayList<SaldoVO> saldos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +45,8 @@ public class PaginaInicialActivity extends AppCompatActivity
         gridSaldos = (ListView) findViewById(R.id.gridSaldos);
         DatabaseHelper db = new DatabaseHelper(this);
 
-        agendamentos = db.getSaldos();
-        adapter = new SaldoAdapter(this, agendamentos);
+        saldos = db.getSaldos();
+        adapter = new SaldoAdapter(this, saldos);
         gridSaldos.setAdapter(adapter);
     }
 
