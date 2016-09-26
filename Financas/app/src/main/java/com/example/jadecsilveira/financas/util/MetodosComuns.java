@@ -27,7 +27,7 @@ public class MetodosComuns {
         }
     }
     public static String convertToDateSQL(String data){
-        data = data.replace(".", "");
+        data = data.replace("/", "");
         String dia = data.substring(0, 2);
         String mes = data.substring(2, 4);
         String ano = data.substring(4, 8);

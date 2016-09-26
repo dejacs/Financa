@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jadecsilveira.financas.R;
@@ -26,6 +28,21 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
         controle = new ControleLancamento();
         controle.setCampos(this, R.layout.activity_inclusao_rendimento);
         helper = new DatabaseHelper(this);
+
+        EditText data = (EditText) findViewById(R.id.data);
+
+        Intent intent = getIntent();
+        Bundle params = intent.getExtras();
+
+        data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(InclusaoRendimentoActivity.this, DateActivity.class));
+            }
+        });
+        if(null!=params && !params.getString("data").equals("")){
+            data.setText(params.getString("data"));
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
