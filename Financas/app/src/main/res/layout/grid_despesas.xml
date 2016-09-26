@@ -13,8 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_weight="1"
         android:layout_gravity="left"
-        android:textSize="10dp"
-        android:textAlignment="textStart" />
+        android:textSize="10dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,19 +31,18 @@
         android:layout_alignParentRight="true"
         android:layout_gravity="right"
         android:layout_weight="1"
-        android:textSize="10dp"
-        android:textAlignment="textEnd" />
+        android:textSize="10dp" />
     <Button
         android:id="@+id/btn_alterar"
-        android:text="Alterar"
-        android:layout_width="70dp"
+        android:layout_width="30dp"
         android:layout_height="30dp"
-        android:textSize="10dp" />
+        android:textSize="10dp"
+        android:background="@android:drawable/ic_menu_edit" />
     <Button
         android:id="@+id/btn_deletar"
-        android:text="Deletar"
-        android:layout_width="70dp"
+        android:layout_width="30dp"
         android:layout_height="30dp"
-        android:textSize="10dp" />
+        android:textSize="10dp"
+        android:background="@android:drawable/ic_menu_delete" />
 
 </LinearLayout>

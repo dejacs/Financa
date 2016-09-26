@@ -26,7 +26,9 @@
     <string name="descricao">Descrição</string>
     <string name="valor">Valor</string>
     <string name="erro_salvar">Erro ao Salvar</string>
+    <string name="erro_excluir">Erro ao Excluir</string>
     <string name="registro_salvo">Registro Salvo</string>
+    <string name="registro_excluido">Registro Excluído</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_lancamento">Lancamentos</string>
 

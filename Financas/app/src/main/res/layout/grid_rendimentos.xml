@@ -36,15 +36,15 @@
         android:textAlignment="textEnd" />
     <Button
         android:id="@+id/btn_alterar"
-        android:text="Alterar"
-        android:layout_width="70dp"
+        android:layout_width="30dp"
         android:layout_height="30dp"
-        android:textSize="10dp" />
+        android:textSize="10dp"
+        android:background="@android:drawable/ic_menu_edit" />
     <Button
         android:id="@+id/btn_deletar"
-        android:text="Deletar"
-        android:layout_width="70dp"
+        android:layout_width="30dp"
         android:layout_height="30dp"
-        android:textSize="10dp" />
+        android:textSize="10dp"
+        android:background="@android:drawable/ic_menu_delete" />
 
 </LinearLayout>

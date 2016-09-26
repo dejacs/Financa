@@ -21,13 +21,15 @@
         android:calendarViewShown="false" />
 
     <Button
-        android:text="OK"
+        android:layout_below="@+id/datePicker"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btn_ok"
+        android:textColor="@color/colorAccent"
+        android:background="@android:drawable/ic_menu_save"
+        android:elevation="1dp"
+        android:height="30dp"
+        android:width="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/datePicker"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp"
-        android:id="@+id/btn_ok"
-        tools:background="@drawable/side_nav_bar_financas"
-        android:textColor="@color/colorAccent" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

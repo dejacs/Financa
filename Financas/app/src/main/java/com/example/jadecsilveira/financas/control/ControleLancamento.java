@@ -3,6 +3,7 @@ package com.example.jadecsilveira.financas.control;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -52,7 +53,6 @@ public class ControleLancamento extends AppCompatActivity {
         descTextView.setText(agendamento.getLancamento().getDescricao());
         valorTextView.setText("R$ " + MetodosComuns.convertToDouble(agendamento.getLancamento().getValor()));
         dataTextView.setText(MetodosComuns.convertDateToStringView(agendamento.getData()));
-
 
         return convertView;
     }

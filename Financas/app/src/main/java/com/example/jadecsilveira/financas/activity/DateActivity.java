@@ -23,7 +23,14 @@ public class DateActivity extends AppCompatActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DateActivity.this, InclusaoDespesaActivity.class);
+                Intent intent = getIntent();
+                String caller = intent.getStringExtra("caller");
+
+                if(caller.equals("InclusaoRendimentoActivity")){
+                    intent = new Intent(DateActivity.this, InclusaoRendimentoActivity.class);
+                }else{
+                    intent = new Intent(DateActivity.this, InclusaoDespesaActivity.class);
+                }
 
                 DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
 

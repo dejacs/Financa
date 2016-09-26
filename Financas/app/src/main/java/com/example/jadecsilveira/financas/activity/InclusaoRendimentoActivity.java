@@ -37,7 +37,9 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
         data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(InclusaoRendimentoActivity.this, DateActivity.class));
+                Intent intent1 = new Intent(InclusaoRendimentoActivity.this, DateActivity.class);
+                intent1.putExtra("caller", "InclusaoRendimentoActivity");
+                startActivity(intent1);
             }
         });
         if(null!=params && !params.getString("data").equals("")){
