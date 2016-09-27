@@ -103,9 +103,11 @@ public class RendimentoActivity extends AppCompatActivity
         if (id == R.id.nav_pagina_inicial) {
             intent = new Intent(RendimentoActivity.this, PaginaInicialActivity.class);
             startActivity(intent);
+            this.finish();
         } else if (id == R.id.nav_despesas) {
             intent = new Intent(RendimentoActivity.this, DespesaActivity.class);
             startActivity(intent);
+            this.finish();
         }
         RendimentoActivity.this.overridePendingTransition(0, 0);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

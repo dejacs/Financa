@@ -39,6 +39,7 @@ public class DateActivity extends AppCompatActivity {
                 intent.putExtras(params);
 
                 startActivity(intent);
+                finish();
             }
         });
     }

@@ -92,12 +92,12 @@ public class PaginaInicialActivity extends AppCompatActivity
 
         if (id == R.id.nav_despesas) {
             intent = new Intent(PaginaInicialActivity.this, DespesaActivity.class);
-            this.finish();
             startActivity(intent);
+            this.finish();
         } else if (id == R.id.nav_rendimentos) {
             intent = new Intent(PaginaInicialActivity.this, RendimentoActivity.class);
-            this.finish();
             startActivity(intent);
+            this.finish();
         }
         PaginaInicialActivity.this.overridePendingTransition(0, 0);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

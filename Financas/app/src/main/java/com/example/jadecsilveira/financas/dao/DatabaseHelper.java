@@ -13,7 +13,6 @@ import com.example.jadecsilveira.financas.vo.LancamentoVO;
 import com.example.jadecsilveira.financas.vo.SaldoVO;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by jadecsilveira on 15/04/2016.
@@ -180,4 +179,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         boolean agendamentoDel = database.delete(Constantes.TABELA_AGENDAMENTO, Constantes.ID_LANCAMENTO + "=" + agendamento.getLancamento().getId(), null) > 0;
         return lancamentoDel && agendamentoDel;
     }
+
 }

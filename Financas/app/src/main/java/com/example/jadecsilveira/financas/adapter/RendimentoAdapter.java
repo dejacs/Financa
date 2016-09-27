@@ -2,6 +2,7 @@ package com.example.jadecsilveira.financas.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.example.jadecsilveira.financas.R;
+import com.example.jadecsilveira.financas.activity.InclusaoRendimentoActivity;
 import com.example.jadecsilveira.financas.activity.RendimentoActivity;
 import com.example.jadecsilveira.financas.control.ControleLancamento;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
@@ -55,8 +57,8 @@ public class RendimentoAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(context);
             row = inflater.inflate(R.layout.grid_rendimentos, parent, false);
         }
-        Button button = (Button)row.findViewById(R.id.btn_deletar);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button excluir = (Button)row.findViewById(R.id.btn_deletar);
+        excluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatabaseHelper db = new DatabaseHelper(context);
@@ -64,6 +66,25 @@ public class RendimentoAdapter extends BaseAdapter {
                 context.startActivity(new Intent(context, RendimentoActivity.class));
             }
         });
+//        Button alterar = (Button)row.findViewById(R.id.btn_alterar);
+//        alterar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                Bundle params = new Bundle();
+//                String descricao = agendamentos.get(position).getLancamento().getDescricao();
+//                String valor = agendamentos.get(position).getLancamento().getValor().toString();
+//                String data = agendamentos.get(position).getData().toString();
+//                String id = agendamentos.get(position).getId().toString();
+//
+//                params.putString("descricao", descricao);
+//                params.putString("valor", valor);
+//                params.putString("data", data);
+//                params.putString("id", id);
+//                intent.putExtras(params);
+//                context.startActivity(new Intent(context, InclusaoRendimentoActivity.class));
+//            }
+//        });
 
         return controle.setAdapter(agendamentos, position, convertView, R.layout.grid_rendimentos, inflater);
     }

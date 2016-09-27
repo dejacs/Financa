@@ -29,6 +29,8 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
         controle.setCampos(this, R.layout.activity_inclusao_rendimento);
         helper = new DatabaseHelper(this);
 
+//        EditText descricao = (EditText) findViewById(R.id.descricao);
+//        EditText valor = (EditText) findViewById(R.id.valor);
         EditText data = (EditText) findViewById(R.id.data);
 
         Intent intent = getIntent();
@@ -42,9 +44,18 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+//        if(null!=params && !params.getString("descricao").equals("")){
+//            data.setText(params.getString("descricao"));
+//        }
+//        if(null!=params && !params.getString("valor").equals("")){
+//            data.setText(params.getString("valor"));
+//        }
         if(null!=params && !params.getString("data").equals("")){
             data.setText(params.getString("data"));
         }
+//        if(null!=params && !params.getString("id").equals("")){
+//            data.setText(params.getString("id"));
+//        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
