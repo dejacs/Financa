@@ -64,9 +64,9 @@ public class SaldoAdapter extends BaseAdapter {
         descTextView.setText(saldo.getLancamento().getDescricao());
         if(saldo.getLancamento().getTipo().equals("rendimento")){
             rendimentoTextView.setText("+R$ " + MetodosComuns.convertToDouble(saldo.getLancamento().getValor()));
-            despesaTextView.setText(" - ");
+            despesaTextView.setText("");
         }else{
-            rendimentoTextView.setText(" - ");
+            rendimentoTextView.setText("");
             despesaTextView.setText("-R$ " + MetodosComuns.convertToDouble(saldo.getLancamento().getValor()));
         }
 

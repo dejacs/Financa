@@ -6,47 +6,43 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="?android:attr/listPreferredItemPaddingRight"
         android:layout_height="wrap_content"
         android:id="@+id/tvData"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_weight="1"
-        android:textSize="10dp"
-        android:textAlignment="textStart" />
+        android:textSize="10dp" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="?android:attr/listPreferredItemPaddingRight"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
         android:id="@+id/tvDescricao"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_weight="1"
-        android:textSize="10dp"
-        android:textAlignment="textStart" />
+        android:textSize="10dp" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="?android:attr/listPreferredItemPaddingRight"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
         android:id="@+id/tvRendimento"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_weight="1"
         android:textSize="10dp"
-        android:textAlignment="textStart"
-        android:textColor="#28ae09"
-        android:layout_marginLeft="5dp" />
+        android:textColor="#28ae09" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="?android:attr/listPreferredItemPaddingRight"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
         android:id="@+id/tvDespesa"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_weight="1"
         android:textSize="10dp"
-        android:textAlignment="textStart"
-        android:textColor="#e62c2c"
-        android:layout_marginLeft="5dp" />
+        android:textColor="#e62c2c" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="?android:attr/listPreferredItemPaddingRight"
         android:layout_height="wrap_content"
         android:id="@+id/tvValor"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_weight="1"
-        android:textSize="10dp"
-        android:textAlignment="textEnd" />
+        android:textSize="10dp" />
 </LinearLayout>
