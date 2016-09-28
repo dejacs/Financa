@@ -56,6 +56,9 @@ public class DespesaActivity extends AppCompatActivity
         gridDespesas = (ListView) findViewById(R.id.gridDespesas);
         DatabaseHelper db = new DatabaseHelper(this);
 
+        View header = (View) getLayoutInflater().inflate(R.layout.header_lancamentos, null);
+        gridDespesas.addHeaderView(header);
+
         agendamentos = db.getAgendamentos(Constantes.DESPESA);
         adapter = new DespesaAdapter(this, agendamentos);
         gridDespesas.setAdapter(adapter);

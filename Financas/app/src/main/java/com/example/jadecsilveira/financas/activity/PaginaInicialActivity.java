@@ -10,12 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.adapter.SaldoAdapter;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
-import com.example.jadecsilveira.financas.util.Constantes;
 import com.example.jadecsilveira.financas.vo.SaldoVO;
 
 import java.util.ArrayList;
@@ -44,6 +44,10 @@ public class PaginaInicialActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         gridSaldos = (ListView) findViewById(R.id.gridSaldos);
+
+        View header = (View) getLayoutInflater().inflate(R.layout.header_saldos, null);
+        gridSaldos.addHeaderView(header);
+
         DatabaseHelper db = new DatabaseHelper(this);
 
         saldos = db.getSaldos();

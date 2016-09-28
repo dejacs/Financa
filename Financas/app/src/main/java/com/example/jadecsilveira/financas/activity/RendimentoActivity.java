@@ -56,6 +56,9 @@ public class RendimentoActivity extends AppCompatActivity
         gridRendimentos = (ListView) findViewById(R.id.gridRendimentos);
         DatabaseHelper db = new DatabaseHelper(this);
 
+        View header = (View) getLayoutInflater().inflate(R.layout.header_lancamentos, null);
+        gridRendimentos.addHeaderView(header);
+
         agendamentos = db.getAgendamentos(Constantes.RENDIMENTO);
         adapter = new RendimentoAdapter(this, agendamentos);
         gridRendimentos.setAdapter(adapter);
