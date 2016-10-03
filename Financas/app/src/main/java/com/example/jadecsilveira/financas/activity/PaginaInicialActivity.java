@@ -8,14 +8,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.adapter.SaldoAdapter;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
+import com.example.jadecsilveira.financas.util.Constantes;
+import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.SaldoVO;
 
 import java.util.ArrayList;
@@ -39,18 +43,24 @@ public class PaginaInicialActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        //this.deleteDatabase(Constantes.BANCO_DE_DADOS);
+//        this.deleteDatabase(Constantes.BANCO_DE_DADOS);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         gridSaldos = (ListView) findViewById(R.id.gridSaldos);
 
-        View header = (View) getLayoutInflater().inflate(R.layout.header_saldos, null);
-        gridSaldos.addHeaderView(header);
-
         DatabaseHelper db = new DatabaseHelper(this);
-
         saldos = db.getSaldos();
+
+        TextView total = (TextView) findViewById(R.id.tvTotal);
+
+        if(!saldos.isEmpty()){
+            View header = (View) getLayoutInflater().inflate(R.layout.header_saldos, null);
+            gridSaldos.addHeaderView(header);
+            total.setText("R$ " + MetodosComuns.convertToDouble(saldos.get(saldos.size()-1).getValor()));
+        }else{
+            total.setText("R$ 0,00");
+        }
         adapter = new SaldoAdapter(this, saldos);
         gridSaldos.setAdapter(adapter);
     }

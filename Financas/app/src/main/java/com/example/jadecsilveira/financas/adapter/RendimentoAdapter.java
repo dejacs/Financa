@@ -63,7 +63,6 @@ public class RendimentoAdapter extends BaseAdapter {
             public void onClick(View v) {
                 DatabaseHelper db = new DatabaseHelper(context);
                 db.deletarAgendamento(agendamentos.get(position));
-                context.startActivity(new Intent(context, RendimentoActivity.class));
             }
         });
 //        Button alterar = (Button)row.findViewById(R.id.btn_alterar);

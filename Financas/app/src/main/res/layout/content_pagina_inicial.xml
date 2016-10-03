@@ -19,4 +19,14 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/gridSaldos"
+        android:textAlignment="center"
+        android:id="@+id/tvTotal"
+        android:textSize="36sp"
+        android:textColor="@color/colorBlack" />
 </RelativeLayout>

@@ -64,7 +64,6 @@ public class DespesaAdapter extends BaseAdapter {
             public void onClick(View v) {
                 DatabaseHelper db = new DatabaseHelper(context);
                 db.deletarAgendamento(agendamentos.get(position));
-                context.startActivity(new Intent(context, DespesaActivity.class));
             }
         });
 

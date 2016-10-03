@@ -56,4 +56,12 @@ public class ControleLancamento extends AppCompatActivity {
 
         return convertView;
     }
+
+    public Double getTotal(ArrayList<AgendamentoVO> agendamentos){
+        Double total = 0.;
+        for(AgendamentoVO agendamento : agendamentos){
+            total = total + agendamento.getLancamento().getValor();
+        }
+        return total;
+    }
 }

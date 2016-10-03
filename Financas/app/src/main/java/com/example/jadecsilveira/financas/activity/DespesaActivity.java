@@ -13,11 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.adapter.DespesaAdapter;
+import com.example.jadecsilveira.financas.control.ControleLancamento;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
+import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
 
 import java.util.ArrayList;
@@ -55,12 +58,18 @@ public class DespesaActivity extends AppCompatActivity
 
         gridDespesas = (ListView) findViewById(R.id.gridDespesas);
         DatabaseHelper db = new DatabaseHelper(this);
-
-        View header = (View) getLayoutInflater().inflate(R.layout.header_lancamentos, null);
-        gridDespesas.addHeaderView(header);
-
         agendamentos = db.getAgendamentos(Constantes.DESPESA);
+
+        TextView total = (TextView) findViewById(R.id.tvTotal);
+
+        if(!agendamentos.isEmpty()) {
+            View header = (View) getLayoutInflater().inflate(R.layout.header_lancamentos, null);
+            gridDespesas.addHeaderView(header);
+            ControleLancamento controle = new ControleLancamento();
+            total.setText("R$ " + MetodosComuns.convertToDouble(controle.getTotal(agendamentos)));
+        }
         adapter = new DespesaAdapter(this, agendamentos);
+        adapter.notifyDataSetChanged();
         gridDespesas.setAdapter(adapter);
     }
 

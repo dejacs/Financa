@@ -33,7 +33,6 @@
             android:textSize="20dp"
             android:textAlignment="center"
             android:hint="@string/valor"
-            android:numeric="decimal"
             android:layout_below="@+id/descricao"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
