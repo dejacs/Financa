@@ -63,27 +63,21 @@ public class RendimentoAdapter extends BaseAdapter {
             public void onClick(View v) {
                 DatabaseHelper db = new DatabaseHelper(context);
                 db.deletarAgendamento(agendamentos.get(position));
+                agendamentos.remove(position);
+                notifyDataSetChanged();
             }
         });
-//        Button alterar = (Button)row.findViewById(R.id.btn_alterar);
-//        alterar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                Bundle params = new Bundle();
-//                String descricao = agendamentos.get(position).getLancamento().getDescricao();
-//                String valor = agendamentos.get(position).getLancamento().getValor().toString();
-//                String data = agendamentos.get(position).getData().toString();
-//                String id = agendamentos.get(position).getId().toString();
-//
-//                params.putString("descricao", descricao);
-//                params.putString("valor", valor);
-//                params.putString("data", data);
-//                params.putString("id", id);
-//                intent.putExtras(params);
-//                context.startActivity(new Intent(context, InclusaoRendimentoActivity.class));
-//            }
-//        });
+        Button alterar = (Button)row.findViewById(R.id.btn_alterar);
+        alterar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle params = new Bundle();
+                Intent intent = new Intent(context, InclusaoRendimentoActivity.class);
+                params.putString("id", agendamentos.get(position).getLancamento().getId().toString());
+                intent.putExtras(params);
+                context.startActivity(intent);
+            }
+        });
 
         return controle.setAdapter(agendamentos, position, convertView, R.layout.grid_rendimentos, inflater);
     }

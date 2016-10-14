@@ -180,4 +180,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return lancamentoDel && agendamentoDel;
     }
 
+    public AgendamentoVO getAgendamento(String id) {
+        String query = "SELECT L._id, L.descricao, L.valor, L.tipo, A.data " +
+                "FROM lancamento L " +
+                "INNER JOIN agendamento A " +
+                "ON L._id = A.id_lancamento " +
+                "WHERE L.usuario = ? " +
+                "AND L._id = ?";
+
+        ArrayList<AgendamentoVO> agendamentos = new ArrayList<>();
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, new String[]{Constantes.LOGIN, id});
+
+        if(MetodosComuns.isNotNull(cursor)){
+            while (cursor.moveToNext()){
+                LancamentoVO lancamento = new LancamentoVO();
+                lancamento.setId(cursor.getLong(cursor.getColumnIndex(Constantes.ID)));
+                lancamento.setDescricao(cursor.getString(cursor.getColumnIndex(Constantes.DESCRICAO)));
+                lancamento.setValor(cursor.getDouble(cursor.getColumnIndex(Constantes.VALOR)));
+                lancamento.setTipo(cursor.getString(cursor.getColumnIndex(Constantes.TIPO)));
+
+                AgendamentoVO agendamento = new AgendamentoVO();
+                agendamento.setData(MetodosComuns.convertToDate(cursor.getString(cursor.getColumnIndex(Constantes.DATA))));
+                agendamento.setLancamento(lancamento);
+
+                agendamentos.add(agendamento);
+            }
+        }
+        return agendamentos.get(0);
+    }
 }

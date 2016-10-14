@@ -69,7 +69,6 @@ public class DespesaActivity extends AppCompatActivity
             total.setText("R$ " + MetodosComuns.convertToDouble(controle.getTotal(agendamentos)));
         }
         adapter = new DespesaAdapter(this, agendamentos);
-        adapter.notifyDataSetChanged();
         gridDespesas.setAdapter(adapter);
     }
 

@@ -14,6 +14,7 @@ import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.control.ControleLancamento;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
+import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
 
 public class InclusaoRendimentoActivity extends AppCompatActivity {
@@ -28,13 +29,25 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
         controle = new ControleLancamento();
         controle.setCampos(this, R.layout.activity_inclusao_rendimento);
         helper = new DatabaseHelper(this);
+        String id;
 
-//        EditText descricao = (EditText) findViewById(R.id.descricao);
-//        EditText valor = (EditText) findViewById(R.id.valor);
+        EditText descricao = (EditText) findViewById(R.id.descricao);
+        EditText valor = (EditText) findViewById(R.id.valor);
         EditText data = (EditText) findViewById(R.id.data);
 
         Intent intent = getIntent();
         Bundle params = intent.getExtras();
+
+        AgendamentoVO agendamento = new AgendamentoVO();
+
+        if(null!=params && null!=params.getString("id") && !params.getString("id").equals("")){
+            id = params.getString("id");
+            agendamento = helper.getAgendamento(id);
+
+            descricao.setText(agendamento.getLancamento().getDescricao());
+            valor.setText(MetodosComuns.convertToDouble(agendamento.getLancamento().getValor()));
+            data.setText(MetodosComuns.convertDateToStringView(agendamento.getData()));
+        }
 
         data.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,18 +57,9 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
-//        if(null!=params && !params.getString("descricao").equals("")){
-//            data.setText(params.getString("descricao"));
-//        }
-//        if(null!=params && !params.getString("valor").equals("")){
-//            data.setText(params.getString("valor"));
-//        }
-        if(null!=params && !params.getString("data").equals("")){
+        if(null!=params && null!=params.getString("data") && !params.getString("data").equals("")){
             data.setText(params.getString("data"));
         }
-//        if(null!=params && !params.getString("id").equals("")){
-//            data.setText(params.getString("id"));
-//        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

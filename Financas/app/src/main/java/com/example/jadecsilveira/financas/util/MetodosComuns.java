@@ -48,17 +48,6 @@ public class MetodosComuns {
             return null;
         }
     }
-    public static String convertToDateBetween(String data){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c = Calendar.getInstance();
-        try {
-            c.setTime(sdf.parse(data));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        c.add(Calendar.DATE, 1);
-        return sdf.format(c.getTime());
-    }
 
     public static String convertDateToStringSQL(Date data){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
