@@ -36,7 +36,7 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
         EditText data = (EditText) findViewById(R.id.data);
 
         Intent intent = getIntent();
-        Bundle params = intent.getExtras();
+        final Bundle params = intent.getExtras();
 
         AgendamentoVO agendamento = new AgendamentoVO();
 
@@ -54,6 +54,15 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent1 = new Intent(InclusaoRendimentoActivity.this, DateActivity.class);
                 intent1.putExtra("caller", "InclusaoRendimentoActivity");
+                if(null!=params.getString("id")) {
+                    intent1.putExtra("id", params.getString("id"));
+                }
+
+                if(null!=params.getString("funcao_botao") && params.getString("funcao_botao").equals("incluir")){
+                    intent1.putExtra("funcao_botao", "incluir");
+                }else if(null!=params.getString("funcao_botao") && params.getString("funcao_botao").equals("alterar")){
+                    intent1.putExtra("funcao_botao", "alterar");
+                }
                 startActivity(intent1);
             }
         });
@@ -70,11 +79,20 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
-        Intent intent = null;
+        Intent intent = getIntent();
+        Bundle params = intent.getExtras();
         int id = item.getItemId();
-        if(id == R.id.action_enviar){
-            agendamento = controle.setObjeto(Constantes.RENDIMENTO);
+
+        if(id == R.id.action_enviar && null!=params.getString("funcao_botao") && params.getString("funcao_botao").equals("incluir")){
+            agendamento = controle.setObjeto(Constantes.RENDIMENTO, Long.valueOf(params.getString("id")));
             if(helper.incluirLancamento(agendamento)){
+                Toast.makeText(this, getString(R.string.registro_salvo), Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, getString(R.string.erro_salvar),Toast.LENGTH_SHORT).show();
+            }
+        }else if(id == R.id.action_enviar && null!=params.getString("funcao_botao") && params.getString("funcao_botao").equals("alterar")){
+            agendamento = controle.setObjeto(Constantes.RENDIMENTO, Long.valueOf(params.getString("id")));
+            if(helper.alterarLancamento(agendamento)){
                 Toast.makeText(this, getString(R.string.registro_salvo), Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(this, getString(R.string.erro_salvar),Toast.LENGTH_SHORT).show();

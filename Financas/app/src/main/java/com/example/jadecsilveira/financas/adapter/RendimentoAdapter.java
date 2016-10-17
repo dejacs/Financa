@@ -74,6 +74,7 @@ public class RendimentoAdapter extends BaseAdapter {
                 Bundle params = new Bundle();
                 Intent intent = new Intent(context, InclusaoRendimentoActivity.class);
                 params.putString("id", agendamentos.get(position).getLancamento().getId().toString());
+                params.putString("funcao_botao", "alterar");
                 intent.putExtras(params);
                 context.startActivity(intent);
             }

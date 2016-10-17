@@ -55,10 +55,12 @@ public class InclusaoDespesaActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
-        Intent intent = null;
+        Intent intent = getIntent();
+        Bundle params = intent.getExtras();
+
         int id = item.getItemId();
         if(id == R.id.action_enviar){
-            agendamento = controle.setObjeto(Constantes.DESPESA);
+            agendamento = controle.setObjeto(Constantes.DESPESA, Long.valueOf(params.getString("id")));
             if(helper.incluirLancamento(agendamento)){
                 Toast.makeText(this, getString(R.string.registro_salvo), Toast.LENGTH_SHORT).show();
             }else{

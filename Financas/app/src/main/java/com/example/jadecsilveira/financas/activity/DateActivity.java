@@ -25,6 +25,8 @@ public class DateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = getIntent();
                 String caller = intent.getStringExtra("caller");
+                String funcaoBotao = intent.getStringExtra("funcao_botao");
+                String id = intent.getStringExtra("id");
 
                 if(caller.equals("InclusaoRendimentoActivity")){
                     intent = new Intent(DateActivity.this, InclusaoRendimentoActivity.class);
@@ -36,6 +38,12 @@ public class DateActivity extends AppCompatActivity {
 
                 Bundle params = new Bundle();
                 params.putString("data", formatarData(datePicker));
+
+                if(null!=funcaoBotao && funcaoBotao.equals("incluir")){
+                    params.putString("funcao_botao", "incluir");
+                }else if(null!=funcaoBotao && funcaoBotao.equals("alterar")){
+                    params.putString("funcao_botao", "alterar");
+                }
                 intent.putExtras(params);
 
                 startActivity(intent);

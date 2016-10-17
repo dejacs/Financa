@@ -30,11 +30,12 @@ public class ControleLancamento extends AppCompatActivity {
         valor = (EditText) activity.findViewById(R.id.valor);
         data = (EditText) activity.findViewById(R.id.data);
     }
-    public AgendamentoVO setObjeto(String tipo){
+    public AgendamentoVO setObjeto(String tipo, long id){
         lancamento = new LancamentoVO();
         lancamento.setDescricao(descricao.getText().toString());
         lancamento.setValor(Double.valueOf(valor.getText().toString()));
         lancamento.setTipo(tipo);
+        lancamento.setId(id);
         agendamento = new AgendamentoVO();
         agendamento.setData(Date.valueOf(MetodosComuns.convertToDateSQL(data.getText().toString())));
         agendamento.setLancamento(lancamento);

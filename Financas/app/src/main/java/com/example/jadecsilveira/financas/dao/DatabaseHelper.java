@@ -2,9 +2,11 @@ package com.example.jadecsilveira.financas.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 
 import com.example.jadecsilveira.financas.util.Constantes;
 import com.example.jadecsilveira.financas.util.MetodosComuns;
@@ -208,5 +210,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return agendamentos.get(0);
+    }
+
+    public boolean alterarAgendamento(AgendamentoVO agendamento){
+        SQLiteDatabase database = getReadableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Constantes.DATA, MetodosComuns.convertDateToStringSQL(agendamento.getData()));
+
+        long resultado = database.update(Constantes.TABELA_AGENDAMENTO, values, Constantes.ID + "= ?", new String[]{ agendamento.getLancamento().getId().toString() });
+
+        if(resultado != -1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean alterarLancamento(AgendamentoVO agendamento){
+        SQLiteDatabase database = getReadableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Constantes.DESCRICAO, agendamento.getLancamento().getDescricao());
+        values.put(Constantes.VALOR, agendamento.getLancamento().getValor());
+        values.put(Constantes.USUARIO, Constantes.LOGIN);
+        values.put(Constantes.TIPO, agendamento.getLancamento().getTipo());
+
+        long resultado = database.update(Constantes.TABELA_LANCAMENTO, values, Constantes.ID + "= ?", new String[]{ agendamento.getLancamento().getId().toString() });
+
+        if(resultado != -1){
+            if(alterarAgendamento(agendamento)){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
     }
 }

@@ -43,7 +43,11 @@ public class RendimentoActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RendimentoActivity.this, InclusaoRendimentoActivity.class));
+                Bundle params = new Bundle();
+                Intent intent = new Intent(new Intent(RendimentoActivity.this, InclusaoRendimentoActivity.class));
+                params.putString("funcao_botao", "incluir");
+                intent.putExtras(params);
+                startActivity(intent);
             }
         });
 
