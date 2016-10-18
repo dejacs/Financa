@@ -23,7 +23,6 @@ import java.util.ArrayList;
  */
 public class RendimentoAdapter extends BaseAdapter {
 
-
     Context context;
     ArrayList<AgendamentoVO> agendamentos;
     private static LayoutInflater inflater = null;

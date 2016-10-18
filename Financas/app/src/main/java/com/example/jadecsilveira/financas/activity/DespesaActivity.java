@@ -43,7 +43,11 @@ public class DespesaActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DespesaActivity.this, InclusaoDespesaActivity.class));
+                Bundle params = new Bundle();
+                Intent intent = new Intent(new Intent(DespesaActivity.this, InclusaoDespesaActivity.class));
+                params.putString("funcao_botao", "incluir");
+                intent.putExtras(params);
+                startActivity(intent);
             }
         });
 

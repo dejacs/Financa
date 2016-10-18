@@ -14,6 +14,7 @@ import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.control.ControleLancamento;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.util.Constantes;
+import com.example.jadecsilveira.financas.util.MetodosComuns;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
 
 public class InclusaoDespesaActivity extends AppCompatActivity {
@@ -21,6 +22,8 @@ public class InclusaoDespesaActivity extends AppCompatActivity {
     private DatabaseHelper helper = new DatabaseHelper(this);
     AgendamentoVO agendamento = new AgendamentoVO();
     ControleLancamento controle;
+    Bundle params;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,21 +31,46 @@ public class InclusaoDespesaActivity extends AppCompatActivity {
         controle = new ControleLancamento();
         controle.setCampos(this, R.layout.activity_inclusao_despesa);
         helper = new DatabaseHelper(this);
+        String id;
 
+        EditText descricao = (EditText) findViewById(R.id.descricao);
+        EditText valor = (EditText) findViewById(R.id.valor);
         EditText data = (EditText) findViewById(R.id.data);
 
-        Intent intent = getIntent();
-        Bundle params = intent.getExtras();
+        intent = getIntent();
+        params = intent.getExtras();
+
+        AgendamentoVO agendamento = new AgendamentoVO();
+
+        if(null!=params && null!=params.getString("id") && !params.getString("id").equals("")){
+            id = params.getString("id");
+            agendamento = helper.getAgendamento(id);
+
+            descricao.setText(agendamento.getLancamento().getDescricao());
+            valor.setText(MetodosComuns.convertToDouble(agendamento.getLancamento().getValor()));
+            data.setText(MetodosComuns.convertDateToStringView(agendamento.getData()));
+        }
 
         data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(InclusaoDespesaActivity.this, DateActivity.class);
-                intent1.putExtra("caller", "InclusaoDespesaActivity");
-                startActivity(intent1);
+                Intent intent = new Intent(new Intent(InclusaoDespesaActivity.this, DateActivity.class));
+                intent.putExtra("caller", "InclusaoDespesaActivity");
+                String funcaoBotao = params.getString("funcao_botao");
+
+                if(null!=params && null!=params.getString("id") && !params.getString("id").equals("")){
+                    params.putString("id", params.getString("id"));
+                }
+                if(null!=funcaoBotao && funcaoBotao.equals("incluir")){
+                    params.putString("funcao_botao", "incluir");
+                }else if(null!=funcaoBotao && funcaoBotao.equals("alterar")){
+                    params.putString("funcao_botao", "alterar");
+                }
+                intent.putExtras(params);
+                startActivity(intent);
             }
         });
-        if(null!=params && !params.getString("data").equals("")){
+        if(null!=params && null!=params.getString("data") && !params.getString("data").equals("")){
             data.setText(params.getString("data"));
         }
     }
@@ -55,13 +83,18 @@ public class InclusaoDespesaActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
-        Intent intent = getIntent();
-        Bundle params = intent.getExtras();
-
         int id = item.getItemId();
-        if(id == R.id.action_enviar){
+
+        if(id == R.id.action_enviar && null!=params.getString("funcao_botao") && params.getString("funcao_botao").equals("incluir")){
             agendamento = controle.setObjeto(Constantes.DESPESA, Long.valueOf(params.getString("id")));
             if(helper.incluirLancamento(agendamento)){
+                Toast.makeText(this, getString(R.string.registro_salvo), Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, getString(R.string.erro_salvar),Toast.LENGTH_SHORT).show();
+            }
+        }else if(id == R.id.action_enviar && null!=params.getString("funcao_botao") && params.getString("funcao_botao").equals("alterar")){
+            agendamento = controle.setObjeto(Constantes.DESPESA, Long.valueOf(params.getString("id")));
+            if(helper.alterarLancamento(agendamento)){
                 Toast.makeText(this, getString(R.string.registro_salvo), Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(this, getString(R.string.erro_salvar),Toast.LENGTH_SHORT).show();

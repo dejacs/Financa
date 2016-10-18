@@ -3,6 +3,7 @@ package com.example.jadecsilveira.financas.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.jadecsilveira.financas.R;
 import com.example.jadecsilveira.financas.activity.DespesaActivity;
+import com.example.jadecsilveira.financas.activity.InclusaoDespesaActivity;
 import com.example.jadecsilveira.financas.control.ControleLancamento;
 import com.example.jadecsilveira.financas.dao.DatabaseHelper;
 import com.example.jadecsilveira.financas.vo.AgendamentoVO;
@@ -33,7 +35,6 @@ public class DespesaAdapter extends BaseAdapter {
         this.agendamentos = agendamentos;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
-
     @Override
     public int getCount() {
         return agendamentos.size();
@@ -68,7 +69,18 @@ public class DespesaAdapter extends BaseAdapter {
                 notifyDataSetChanged();
             }
         });
-
+        Button alterar = (Button)row.findViewById(R.id.btn_alterar);
+        alterar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle params = new Bundle();
+                Intent intent = new Intent(context, InclusaoDespesaActivity.class);
+                params.putString("id", agendamentos.get(position).getLancamento().getId().toString());
+                params.putString("funcao_botao", "alterar");
+                intent.putExtras(params);
+                context.startActivity(intent);
+            }
+        });
         return controle.setAdapter(agendamentos, position, convertView, R.layout.grid_despesas, inflater);
     }
 }
