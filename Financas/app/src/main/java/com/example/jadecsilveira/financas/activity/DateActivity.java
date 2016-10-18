@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.example.jadecsilveira.financas.R;
 
@@ -19,34 +20,44 @@ public class DateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.date);
 
+        final Intent[] intent = {getIntent()};
+        final Bundle params = intent[0].getExtras();
+
         Button ok = (Button) findViewById(R.id.btn_ok);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
-                String caller = intent.getStringExtra("caller");
-                String funcaoBotao = intent.getStringExtra("funcao_botao");
-                String id = intent.getStringExtra("id");
+                String caller = intent[0].getStringExtra("caller");
 
-                if(caller.equals("InclusaoRendimentoActivity")){
-                    intent = new Intent(DateActivity.this, InclusaoRendimentoActivity.class);
+                if(null!=caller && caller.equals("InclusaoRendimentoActivity")){
+                    intent[0] = new Intent(DateActivity.this, InclusaoRendimentoActivity.class);
+                }else if(null!=caller && caller.equals("InclusaoDespesaActivity")){
+                    intent[0] = new Intent(DateActivity.this, InclusaoDespesaActivity.class);
                 }else{
-                    intent = new Intent(DateActivity.this, InclusaoDespesaActivity.class);
+                    Toast.makeText(DateActivity.this, getString(R.string.erro_salvar), Toast.LENGTH_SHORT).show();
                 }
 
                 DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
 
-                Bundle params = new Bundle();
-                params.putString("data", formatarData(datePicker));
+                if(null!=params){
+                    String funcaoBotao = params.getString("funcao_botao");
+                    String id = params.getString("id");
 
-                if(null!=funcaoBotao && funcaoBotao.equals("incluir")){
-                    params.putString("funcao_botao", "incluir");
-                }else if(null!=funcaoBotao && funcaoBotao.equals("alterar")){
-                    params.putString("funcao_botao", "alterar");
+                    if(null!=id && !id.equals("")){
+                        params.putString("id", params.getString("id"));
+                    }
+                    if(null!=funcaoBotao && funcaoBotao.equals("incluir")){
+                        params.putString("funcao_botao", "incluir");
+                    }else if(null!=funcaoBotao && funcaoBotao.equals("alterar")){
+                        params.putString("funcao_botao", "alterar");
+                    }
+                    params.putString("data", formatarData(datePicker));
+                    intent[0].putExtras(params);
+                }else{
+                    Toast.makeText(DateActivity.this, getString(R.string.erro_salvar), Toast.LENGTH_SHORT).show();
                 }
-                intent.putExtras(params);
 
-                startActivity(intent);
+                startActivity(intent[0]);
                 finish();
             }
         });

@@ -22,8 +22,10 @@ public class MetodosComuns {
             }
             String valorFormatado = valorAntesVirgula + "," +valorDepoisVirgula;
             return valorFormatado;
-        }else{
+        }else if(!valor.toString().contains(",")){
             return valor.toString()+",00";
+        }else{
+            return valor.toString().replace(",", ".");
         }
     }
     public static String convertToDateSQL(String data){

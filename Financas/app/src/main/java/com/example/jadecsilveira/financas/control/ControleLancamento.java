@@ -33,12 +33,13 @@ public class ControleLancamento extends AppCompatActivity {
     public AgendamentoVO setObjeto(String tipo, long id){
         lancamento = new LancamentoVO();
         lancamento.setDescricao(descricao.getText().toString());
-        lancamento.setValor(Double.valueOf(valor.getText().toString()));
+        lancamento.setValor(Double.valueOf(MetodosComuns.convertToDouble(valor.getText().toString())));
         lancamento.setTipo(tipo);
         lancamento.setId(id);
         agendamento = new AgendamentoVO();
         agendamento.setData(Date.valueOf(MetodosComuns.convertToDateSQL(data.getText().toString())));
         agendamento.setLancamento(lancamento);
+        agendamento.setId(id);
         return agendamento;
     }
     public View setAdapter(ArrayList<AgendamentoVO> agendamentos, int position, View convertView, Integer layout, LayoutInflater inflater){

@@ -22,6 +22,8 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
     private DatabaseHelper helper = new DatabaseHelper(this);
     AgendamentoVO agendamento = new AgendamentoVO();
     ControleLancamento controle;
+    Bundle params;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,8 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
         EditText valor = (EditText) findViewById(R.id.valor);
         EditText data = (EditText) findViewById(R.id.data);
 
-        Intent intent = getIntent();
-        final Bundle params = intent.getExtras();
+        intent = getIntent();
+        params = intent.getExtras();
 
         AgendamentoVO agendamento = new AgendamentoVO();
 
@@ -52,18 +54,20 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
         data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(InclusaoRendimentoActivity.this, DateActivity.class);
-                intent1.putExtra("caller", "InclusaoRendimentoActivity");
-                if(null!=params.getString("id")) {
-                    intent1.putExtra("id", params.getString("id"));
-                }
+                Intent intent = new Intent(new Intent(InclusaoRendimentoActivity.this, DateActivity.class));
+                intent.putExtra("caller", "InclusaoRendimentoActivity");
+                String funcaoBotao = params.getString("funcao_botao");
 
-                if(null!=params.getString("funcao_botao") && params.getString("funcao_botao").equals("incluir")){
-                    intent1.putExtra("funcao_botao", "incluir");
-                }else if(null!=params.getString("funcao_botao") && params.getString("funcao_botao").equals("alterar")){
-                    intent1.putExtra("funcao_botao", "alterar");
+                if(null!=params && null!=params.getString("id") && !params.getString("id").equals("")){
+                    params.putString("id", params.getString("id"));
                 }
-                startActivity(intent1);
+                if(null!=funcaoBotao && funcaoBotao.equals("incluir")){
+                    params.putString("funcao_botao", "incluir");
+                }else if(null!=funcaoBotao && funcaoBotao.equals("alterar")){
+                    params.putString("funcao_botao", "alterar");
+                }
+                intent.putExtras(params);
+                startActivity(intent);
             }
         });
         if(null!=params && null!=params.getString("data") && !params.getString("data").equals("")){
@@ -79,8 +83,6 @@ public class InclusaoRendimentoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
-        Intent intent = getIntent();
-        Bundle params = intent.getExtras();
         int id = item.getItemId();
 
         if(id == R.id.action_enviar && null!=params.getString("funcao_botao") && params.getString("funcao_botao").equals("incluir")){
