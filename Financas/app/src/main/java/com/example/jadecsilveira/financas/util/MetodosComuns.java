@@ -13,7 +13,7 @@ public class MetodosComuns {
     public static boolean isNotNull(Object objeto){
         return null!=objeto;
     }
-    public static String convertToDouble(Object valor){
+    public static String convertToDoubleView(Object valor){
         if(valor.toString().contains(".")){
             String valorAntesVirgula = valor.toString().substring(0, valor.toString().indexOf("."));
             String valorDepoisVirgula = valor.toString().substring(valor.toString().indexOf(".")+1, valor.toString().length());
@@ -22,10 +22,16 @@ public class MetodosComuns {
             }
             String valorFormatado = valorAntesVirgula + "," +valorDepoisVirgula;
             return valorFormatado;
-        }else if(!valor.toString().contains(",")){
-            return valor.toString()+",00";
         }else{
+            return valor.toString()+",00";
+        }
+    }
+
+    public static String convertToDoubleSQL(String valor) {
+        if(valor.toString().contains(",")){
             return valor.toString().replace(",", ".");
+        }else {
+            return valor;
         }
     }
     public static String convertToDateSQL(String data){

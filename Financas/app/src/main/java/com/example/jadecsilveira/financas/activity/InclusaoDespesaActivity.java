@@ -47,7 +47,7 @@ public class InclusaoDespesaActivity extends AppCompatActivity {
             agendamento = helper.getAgendamento(id);
 
             descricao.setText(agendamento.getLancamento().getDescricao());
-            valor.setText(MetodosComuns.convertToDouble(agendamento.getLancamento().getValor()));
+            valor.setText(MetodosComuns.convertToDoubleView(agendamento.getLancamento().getValor()));
             data.setText(MetodosComuns.convertDateToStringView(agendamento.getData()));
         }
 
@@ -86,7 +86,7 @@ public class InclusaoDespesaActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_enviar && null!=params.getString("funcao_botao") && params.getString("funcao_botao").equals("incluir")){
-            agendamento = controle.setObjeto(Constantes.DESPESA, Long.valueOf(params.getString("id")));
+            agendamento = controle.setObjeto(Constantes.DESPESA, -1);
             if(helper.incluirLancamento(agendamento)){
                 Toast.makeText(this, getString(R.string.registro_salvo), Toast.LENGTH_SHORT).show();
             }else{

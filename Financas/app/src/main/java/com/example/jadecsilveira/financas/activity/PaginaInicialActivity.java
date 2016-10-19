@@ -57,7 +57,7 @@ public class PaginaInicialActivity extends AppCompatActivity
         if(!saldos.isEmpty()){
             View header = (View) getLayoutInflater().inflate(R.layout.header_saldos, null);
             gridSaldos.addHeaderView(header);
-            total.setText("R$ " + MetodosComuns.convertToDouble(saldos.get(saldos.size()-1).getValor()));
+            total.setText("R$ " + MetodosComuns.convertToDoubleView(saldos.get(saldos.size()-1).getValor()));
         }else{
             total.setText("R$ 0,00");
         }

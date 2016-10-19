@@ -33,9 +33,11 @@ public class ControleLancamento extends AppCompatActivity {
     public AgendamentoVO setObjeto(String tipo, long id){
         lancamento = new LancamentoVO();
         lancamento.setDescricao(descricao.getText().toString());
-        lancamento.setValor(Double.valueOf(MetodosComuns.convertToDouble(valor.getText().toString())));
+        lancamento.setValor(Double.valueOf(MetodosComuns.convertToDoubleSQL(valor.getText().toString())));
         lancamento.setTipo(tipo);
-        lancamento.setId(id);
+        if(id!=-1){
+            lancamento.setId(id);
+        }
         agendamento = new AgendamentoVO();
         agendamento.setData(Date.valueOf(MetodosComuns.convertToDateSQL(data.getText().toString())));
         agendamento.setLancamento(lancamento);
@@ -53,7 +55,7 @@ public class ControleLancamento extends AppCompatActivity {
         AgendamentoVO agendamento = new AgendamentoVO();
         agendamento = agendamentos.get(position);
         descTextView.setText(agendamento.getLancamento().getDescricao());
-        valorTextView.setText("R$ " + MetodosComuns.convertToDouble(agendamento.getLancamento().getValor()));
+        valorTextView.setText("R$ " + MetodosComuns.convertToDoubleView(agendamento.getLancamento().getValor()));
         dataTextView.setText(MetodosComuns.convertDateToStringView(agendamento.getData()));
 
         return convertView;

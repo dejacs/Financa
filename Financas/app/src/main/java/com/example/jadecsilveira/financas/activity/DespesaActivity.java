@@ -70,7 +70,7 @@ public class DespesaActivity extends AppCompatActivity
             View header = (View) getLayoutInflater().inflate(R.layout.header_lancamentos, null);
             gridDespesas.addHeaderView(header);
             ControleLancamento controle = new ControleLancamento();
-            total.setText("R$ " + MetodosComuns.convertToDouble(controle.getTotal(agendamentos)));
+            total.setText("R$ " + MetodosComuns.convertToDoubleView(controle.getTotal(agendamentos)));
         }
         adapter = new DespesaAdapter(this, agendamentos);
         gridDespesas.setAdapter(adapter);

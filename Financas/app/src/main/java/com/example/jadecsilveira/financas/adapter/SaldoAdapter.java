@@ -63,14 +63,14 @@ public class SaldoAdapter extends BaseAdapter {
         dataTextView.setText(MetodosComuns.convertDateToStringView(saldo.getData()));
         descTextView.setText(saldo.getLancamento().getDescricao());
         if(saldo.getLancamento().getTipo().equals("rendimento")){
-            rendimentoTextView.setText("+R$ " + MetodosComuns.convertToDouble(saldo.getLancamento().getValor()));
+            rendimentoTextView.setText("+R$ " + MetodosComuns.convertToDoubleView(saldo.getLancamento().getValor()));
             despesaTextView.setText("");
         }else{
             rendimentoTextView.setText("");
-            despesaTextView.setText("-R$ " + MetodosComuns.convertToDouble(saldo.getLancamento().getValor()));
+            despesaTextView.setText("-R$ " + MetodosComuns.convertToDoubleView(saldo.getLancamento().getValor()));
         }
 
-        valorTextView.setText("R$ " + MetodosComuns.convertToDouble(saldo.getValor()));
+        valorTextView.setText("R$ " + MetodosComuns.convertToDoubleView(saldo.getValor()));
 
         return convertView;
     }

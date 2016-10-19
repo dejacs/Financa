@@ -70,7 +70,7 @@ public class RendimentoActivity extends AppCompatActivity
             View header = (View) getLayoutInflater().inflate(R.layout.header_lancamentos, null);
             gridRendimentos.addHeaderView(header);
             ControleLancamento controle = new ControleLancamento();
-            total.setText("R$ " + MetodosComuns.convertToDouble(controle.getTotal(agendamentos)));
+            total.setText("R$ " + MetodosComuns.convertToDoubleView(controle.getTotal(agendamentos)));
         }
         adapter = new RendimentoAdapter(this, agendamentos);
         gridRendimentos.setAdapter(adapter);
