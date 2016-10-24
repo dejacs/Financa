@@ -41,6 +41,8 @@ public class DateActivity extends AppCompatActivity {
 
                 if(null!=params){
                     String funcaoBotao = params.getString("funcao_botao");
+                    String valor = params.getString("valor");
+                    String descricao = params.getString("descricao");
                     String id = params.getString("id");
 
                     if(null!=id && !id.equals("")){
@@ -50,6 +52,12 @@ public class DateActivity extends AppCompatActivity {
                         params.putString("funcao_botao", "incluir");
                     }else if(null!=funcaoBotao && funcaoBotao.equals("alterar")){
                         params.putString("funcao_botao", "alterar");
+                    }
+                    if(null!=valor && !valor.equals("")){
+                        params.putString("valor", valor);
+                    }
+                    if(null!=descricao && !descricao.equals("")){
+                        params.putString("descricao", descricao);
                     }
                     params.putString("data", formatarData(datePicker));
                     intent[0].putExtras(params);

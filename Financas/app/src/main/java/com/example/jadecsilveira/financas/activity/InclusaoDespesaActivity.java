@@ -42,13 +42,23 @@ public class InclusaoDespesaActivity extends AppCompatActivity {
 
         AgendamentoVO agendamento = new AgendamentoVO();
 
-        if(null!=params && null!=params.getString("id") && !params.getString("id").equals("")){
+        if(null!=params){
+            String valor_param = params.getString("valor");
+            String descricao_param = params.getString("descricao");
             id = params.getString("id");
-            agendamento = helper.getAgendamento(id);
 
-            descricao.setText(agendamento.getLancamento().getDescricao());
-            valor.setText(MetodosComuns.convertToDoubleView(agendamento.getLancamento().getValor()));
-            data.setText(MetodosComuns.convertDateToStringView(agendamento.getData()));
+            if(null!=valor_param && !valor_param.equals("")){
+                valor.setText(valor_param);
+            }
+            if(null!=descricao_param && !descricao_param.equals("")){
+                descricao.setText(descricao_param);
+            }else if(null!=id && !id.equals("")){
+                agendamento = helper.getAgendamento(id);
+
+                descricao.setText(agendamento.getLancamento().getDescricao());
+                valor.setText(MetodosComuns.convertToDoubleView(agendamento.getLancamento().getValor()));
+                data.setText(MetodosComuns.convertDateToStringView(agendamento.getData()));
+            }
         }
 
         data.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +67,8 @@ public class InclusaoDespesaActivity extends AppCompatActivity {
                 Intent intent = new Intent(new Intent(InclusaoDespesaActivity.this, DateActivity.class));
                 intent.putExtra("caller", "InclusaoDespesaActivity");
                 String funcaoBotao = params.getString("funcao_botao");
+                EditText valor = (EditText) findViewById(R.id.valor);
+                EditText descricao = (EditText) findViewById(R.id.descricao);
 
                 if(null!=params && null!=params.getString("id") && !params.getString("id").equals("")){
                     params.putString("id", params.getString("id"));
@@ -65,6 +77,12 @@ public class InclusaoDespesaActivity extends AppCompatActivity {
                     params.putString("funcao_botao", "incluir");
                 }else if(null!=funcaoBotao && funcaoBotao.equals("alterar")){
                     params.putString("funcao_botao", "alterar");
+                }
+                if(null!=valor && null!=valor.getText().toString() && !valor.getText().toString().equals("")){
+                    params.putString("valor", valor.getText().toString());
+                }
+                if(null!=descricao && null!=descricao.getText().toString() && !descricao.getText().toString().equals("")){
+                    params.putString("descricao", descricao.getText().toString());
                 }
                 intent.putExtras(params);
                 startActivity(intent);
