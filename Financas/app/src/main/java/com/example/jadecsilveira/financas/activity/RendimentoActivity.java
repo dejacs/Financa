@@ -123,6 +123,10 @@ public class RendimentoActivity extends AppCompatActivity
             intent = new Intent(RendimentoActivity.this, DespesaActivity.class);
             startActivity(intent);
             this.finish();
+        } else if (id == R.id.nav_rendimentos) {
+            intent = new Intent(RendimentoActivity.this, RendimentoActivity.class);
+            startActivity(intent);
+            finish();
         }
         RendimentoActivity.this.overridePendingTransition(0, 0);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

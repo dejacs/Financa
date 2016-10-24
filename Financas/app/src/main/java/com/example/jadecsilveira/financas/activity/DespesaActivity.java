@@ -123,6 +123,10 @@ public class DespesaActivity extends AppCompatActivity
             intent = new Intent(DespesaActivity.this, RendimentoActivity.class);
             startActivity(intent);
             finish();
+        } else if (id == R.id.nav_despesas) {
+            intent = new Intent(DespesaActivity.this, DespesaActivity.class);
+            startActivity(intent);
+            this.finish();
         }
         DespesaActivity.this.overridePendingTransition(0, 0);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
